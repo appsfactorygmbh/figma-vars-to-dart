@@ -1,11 +1,15 @@
 set -e
 
 # To create your own token go to Account => Personal Access Tokens section in Figma 
-rm -rf lib/gen
-dart bin/figma_variables_to_dart.dart \
+
+
+rm -rf lib/figma
+
+dart bin/figma_vars_to_dart.dart \
 	 --token $FIGMA_TOKEN \
-	 --fileId $FIGMA_FILE \
+	 --fileId $1 \
+	 --dartOutputFolder lib/figma \
 	 --jsonOutputFile vars.json 
-# rm lib/gen/tokens.dart
-dart fix lib/gen
-dart format lib/gen
+
+dart fix lib/figma
+dart format lib/figma
