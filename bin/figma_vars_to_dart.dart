@@ -18,7 +18,7 @@ Future<void> main(List<String> arguments) async {
 
   final fileId = argsParsed['fileId'] as String;
   final token = argsParsed['token'] as String;
-  final jsonOutput = argsParsed['jsonOutput'] as String?;
+  final jsonOutput = argsParsed['jsonOutputFile'] as String?;
   final dartOutputFolder =
       (argsParsed['dartOutputFolder'] as String?) ?? 'lib/gen';
 
