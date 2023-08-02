@@ -28,4 +28,5 @@ doc/api/
 
 local
 lib/gen
+lib/figma
 vars.json
