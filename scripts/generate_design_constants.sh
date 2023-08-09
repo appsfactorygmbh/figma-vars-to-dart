@@ -11,5 +11,5 @@ dart bin/figma_vars_to_dart.dart \
 	 --dartOutputFolder lib/figma \
 	 --jsonOutputFile vars.json 
 
-dart fix lib/figma
+dart fix --apply lib/figma
 dart format lib/figma
