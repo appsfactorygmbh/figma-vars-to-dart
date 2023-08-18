@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+
+import 'shared/ui_constants/ui_constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +14,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    final colors = ColorSemantics.dark(
+      ColorPrimitives.create(),
+    );
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -28,7 +37,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: colors.buttonPrimary),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
