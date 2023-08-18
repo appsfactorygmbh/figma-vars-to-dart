@@ -27,6 +27,3 @@ doc/api/
 .flutter-plugins-dependencies
 
 local
-lib/gen
-lib/figma
-vars.json

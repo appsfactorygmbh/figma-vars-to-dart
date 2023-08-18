@@ -1,11 +1,13 @@
-import 'package:figma_vars_to_dart/services/code_generator/string_ext.dart';
-import 'package:figma_vars_to_dart/services/parser/entities.dart';
-
+import '../parser/entities.dart';
 import 'code_generator.dart';
+import 'string_ext.dart';
 
 class CodeGeneratorService {
   List<WriteTask> generateCode(
-      List<Variable> variables, List<Collection> collections) {
+    List<Variable> variables,
+    List<Collection> collections,
+    String directoryName,
+  ) {
     final context = <String, dynamic>{};
 
     final tasks = collections.map((collection) {
@@ -16,6 +18,7 @@ class CodeGeneratorService {
         variables,
         collection,
         collections,
+        directoryName,
       );
 
       return WriteTask(
@@ -27,7 +30,7 @@ class CodeGeneratorService {
     return [
       ...tasks,
       WriteTask(
-        'index.dart',
+        '$directoryName.dart',
         tasks.map((task) => 'export \'${task.filePath}\';').join('\n'),
       ),
     ];
@@ -38,18 +41,20 @@ class CodeGeneratorService {
     List<Variable> variables,
     Collection collection,
     List<Collection> collections,
+    String directoryName,
   ) {
     final members = _buildMembersList(variables, collection, collections);
 
-    final className = collection.name.capitalize().sanitizeVariableName();
+    final className = collection.name.pascalCase().escapeKeywords();
 
+    int totalDependenciesCounter = 0;
     final membersJoined = members
         .map((member) => '  final ${member.type} ${member.name};')
         .join('\n');
     final constructorParams =
         members.map((member) => '  required this.${member.name},').join('\n');
 
-    final modeFactories = collection.modes.map((mode) {
+    final modeFactories = collection.modes.map(_sanitizeModeName).map((mode) {
       final factoryConstructorParams = members
           .map((member) =>
               '  ${member.name}: ${member.valuesByMode[mode.modeId]},')
@@ -60,15 +65,16 @@ class CodeGeneratorService {
           .map((member) => member.valuesByMode[mode.modeId] as String)
           .where(isReference)
           .map((dependingMember) => dependingMember.split('.')[0])
-          .map((dependency) => '${dependency.capitalize()} $dependency,')
+          .map((dependency) =>
+              '${dependency.capitalizeFirstLetter().escapeKeywords()} $dependency,')
           .toList();
 
       final dependenciesUnique = [
         ...{...dependencies}
       ].join('\n');
 
-      final factoryConstructorName =
-          mode.name.toCamelCase().sanitizeVariableName();
+      totalDependenciesCounter += dependenciesUnique.length;
+      final factoryConstructorName = mode.name.camelCase().escapeKeywords();
       return 'factory $className.$factoryConstructorName($dependenciesUnique) => $className(\n$paramsSorted\n);';
     }).join('\n');
 
@@ -79,10 +85,8 @@ $className ({
 ''';
 
     final content = '''
-// ignore_for_file: unused_import
-
 import 'package:flutter/widgets.dart';
-import 'index.dart';
+${totalDependenciesCounter > 0 ? "import '$directoryName.dart';" : ''}
     
 class $className {
 $membersJoined
@@ -92,6 +96,14 @@ $modeFactories
 }
     ''';
     return content;
+  }
+
+  Mode _sanitizeModeName(mode) {
+    if (mode.name == 'Mode 1') {
+      return mode.copyWith(name: 'create');
+    } else {
+      return mode;
+    }
   }
 
   bool isReference(value) {
@@ -129,7 +141,7 @@ $modeFactories
       VariableType.string => 'String',
       VariableType.boolean => 'bool',
     };
-    final name = variable.name.toCamelCase().sanitizeVariableName();
+    final name = variable.name.camelCase().escapeKeywords();
     final valuesByMode = {
       for (final m in collection.modes)
         m.modeId: getValueBy(
@@ -168,11 +180,9 @@ $modeFactories
             .firstWhere(
                 (element) => element.id == variableEntry.variableCollectionId)
             .name;
-        final dependencyName =
-            collectionName.toCamelCase().sanitizeVariableName();
+        final dependencyName = collectionName.camelCase().escapeKeywords();
 
-        final referencedName =
-            variableEntry.name.toCamelCase().sanitizeVariableName();
+        final referencedName = variableEntry.name.camelCase().escapeKeywords();
 
         result = '$dependencyName.$referencedName';
       } catch (_) {
@@ -192,11 +202,16 @@ $modeFactories
 
   String _formatColor(Map<String, dynamic> json) {
     if (json['a'] == null) return 'throw 0';
+
     final a = (json['a'] * 255).round();
     final r = (json['r'] * 255).round();
     final g = (json['g'] * 255).round();
     final b = (json['b'] * 255).round();
 
-    return 'Color.fromARGB($a, $r, $g, $b)';
+    final value = a.toHex() + r.toHex() + g.toHex() + b.toHex();
+
+    final color = 'Color(0x$value)';
+
+    return color;
   }
 }
