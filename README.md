@@ -20,7 +20,7 @@ dev_dependencies:
 ### Create the token
 
 In order to interact with Figma API you will need a personal access token. 
-To create your this token you can go to Figma "Help and account" -> "Account settings" -> "Personal Access Tokens" section.
+To create this token you can go to Figma "Help and account" -> "Account settings" -> "Personal Access Tokens" section.
 
 ![Account menu](images/account_menu.png)
 
