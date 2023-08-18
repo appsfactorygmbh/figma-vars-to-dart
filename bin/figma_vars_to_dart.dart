@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:args/args.dart';
 import 'package:figma_vars_to_dart/services/services.dart';
@@ -30,7 +31,13 @@ Future<void> main(List<String> arguments) async {
   final (collections, variables) = parser.parse(json['meta']);
 
   print('Converting variables to Dart');
-  final tasks = CodeGeneratorService().generateCode(variables, collections);
+  final parentDirectory = dartOutputFolder.split(Platform.pathSeparator).last;
+
+  final tasks = CodeGeneratorService().generateCode(
+    variables,
+    collections,
+    parentDirectory,
+  );
   final tasksUpdated = tasks
       .map(
         (task) => task.copyWith(
