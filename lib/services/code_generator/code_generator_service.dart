@@ -1,10 +1,10 @@
+import 'int_ext.dart';
 import '../parser/entities.dart';
 import 'code_generator.dart';
 import 'string_ext.dart';
 
 class CodeGeneratorService {
   List<WriteTask> generateCode(
-    List<Variable> variables,
     List<Collection> collections,
     String directoryName,
   ) {
@@ -15,7 +15,6 @@ class CodeGeneratorService {
 
       final content = _getFileContent(
         context,
-        variables,
         collection,
         collections,
         directoryName,
@@ -38,12 +37,11 @@ class CodeGeneratorService {
 
   String _getFileContent(
     Map<String, dynamic> context,
-    List<Variable> variables,
     Collection collection,
     List<Collection> collections,
     String directoryName,
   ) {
-    final members = _buildMembersList(variables, collection, collections);
+    final members = _buildMembersList(collection, collections);
 
     final className = collection.name.pascalCase().escapeKeywords();
 
@@ -113,15 +111,15 @@ $modeFactories
   }
 
   List<({String name, String type, Map<String, String> valuesByMode})>
-      _buildMembersList(List<Variable> variables, Collection collection,
-          List<Collection> collections) {
-    final members = variables
-        .where((variable) => variable.variableCollectionId == collection.id)
+      _buildMembersList(
+    Collection collection,
+    List<Collection> collections,
+  ) {
+    final members = collection.variables
         .map(
           (variable) => getCodeFor(
             variable,
             collection,
-            variables,
             collections,
           ),
         )
@@ -132,7 +130,6 @@ $modeFactories
   ({String type, String name, Map<String, String> valuesByMode}) getCodeFor(
     Variable variable,
     Collection collection,
-    List<Variable> variables,
     List<Collection> collections,
   ) {
     final type = switch (variable.resolvedType) {
@@ -148,7 +145,6 @@ $modeFactories
           m.modeId,
           variable,
           collection,
-          variables,
           collections,
         ),
     };
@@ -164,7 +160,6 @@ $modeFactories
     String modeId,
     Variable variable,
     Collection collection,
-    List<Variable> variables,
     List<Collection> collections,
   ) {
     String result;
@@ -174,7 +169,7 @@ $modeFactories
       final id = selectedValue['id'];
       try {
         final variableEntry =
-            variables.firstWhere((element) => element.id == id);
+            collection.variables.firstWhere((element) => element.id == id);
 
         final collectionName = collections
             .firstWhere(
@@ -203,10 +198,10 @@ $modeFactories
   String _formatColor(Map<String, dynamic> json) {
     if (json['a'] == null) return 'throw 0';
 
-    final a = (json['a'] * 255).round();
-    final r = (json['r'] * 255).round();
-    final g = (json['g'] * 255).round();
-    final b = (json['b'] * 255).round();
+    final int a = (json['a'] * 255).round();
+    final int r = (json['r'] * 255).round();
+    final int g = (json['g'] * 255).round();
+    final int b = (json['b'] * 255).round();
 
     final value = a.toHex() + r.toHex() + g.toHex() + b.toHex();
 

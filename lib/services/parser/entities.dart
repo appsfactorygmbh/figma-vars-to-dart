@@ -15,7 +15,13 @@ enum VariableType {
 }
 
 @freezed
-class Mode with _$Mode {
+sealed class VariableValue with _$VariableValue {
+ const factory VariableValue.hardcoded() = HardcodedVariableValue;
+ const factory VariableValue.reference() = ReferencedVariableValue;
+}
+
+@freezed
+ class Mode with _$Mode {
   const factory Mode({
     required String modeId,
     required String name,
@@ -44,6 +50,9 @@ class Collection with _$Collection {
     required String id,
     required String defaultModeId,
     required List<Mode> modes,
+    //locally computed fields
+    @Default([]) List<Variable> variables,
+    @Default([]) List<Collection> dependsOnCollections,
   }) = _Collection;
   factory Collection.fromJson(Map<String, dynamic> json) =>
       _$CollectionFromJson(json);

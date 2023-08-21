@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'ui_constants.dart';
 
 class ColorSemantics {
   final Color background;
@@ -10,18 +9,12 @@ class ColorSemantics {
     required this.buttonPrimary,
   });
 
-  factory ColorSemantics.light(
-    ColorPrimitives colorPrimitives,
-  ) =>
-      ColorSemantics(
-        background: colorPrimitives.white,
-        buttonPrimary: colorPrimitives.blue,
+  factory ColorSemantics.light() => ColorSemantics(
+        background: throw "not found",
+        buttonPrimary: throw "not found",
       );
-  factory ColorSemantics.dark(
-    ColorPrimitives colorPrimitives,
-  ) =>
-      ColorSemantics(
-        background: colorPrimitives.black,
-        buttonPrimary: colorPrimitives.green,
+  factory ColorSemantics.dark() => ColorSemantics(
+        background: throw "not found",
+        buttonPrimary: throw "not found",
       );
 }

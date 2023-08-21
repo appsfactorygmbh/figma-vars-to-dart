@@ -48,6 +48,14 @@ _$_Collection _$$_CollectionFromJson(Map<String, dynamic> json) =>
       modes: (json['modes'] as List<dynamic>)
           .map((e) => Mode.fromJson(e as Map<String, dynamic>))
           .toList(),
+      variables: (json['variables'] as List<dynamic>?)
+              ?.map((e) => Variable.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      dependsOnCollections: (json['dependsOnCollections'] as List<dynamic>?)
+              ?.map((e) => Collection.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$_CollectionToJson(_$_Collection instance) =>
@@ -56,4 +64,6 @@ Map<String, dynamic> _$$_CollectionToJson(_$_Collection instance) =>
       'id': instance.id,
       'defaultModeId': instance.defaultModeId,
       'modes': instance.modes,
+      'variables': instance.variables,
+      'dependsOnCollections': instance.dependsOnCollections,
     };

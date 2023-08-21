@@ -14,6 +14,271 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+/// @nodoc
+mixin _$VariableValue {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() hardcoded,
+    required TResult Function() reference,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? hardcoded,
+    TResult? Function()? reference,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? hardcoded,
+    TResult Function()? reference,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HardcodedVariableValue value) hardcoded,
+    required TResult Function(ReferencedVariableValue value) reference,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HardcodedVariableValue value)? hardcoded,
+    TResult? Function(ReferencedVariableValue value)? reference,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HardcodedVariableValue value)? hardcoded,
+    TResult Function(ReferencedVariableValue value)? reference,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VariableValueCopyWith<$Res> {
+  factory $VariableValueCopyWith(
+          VariableValue value, $Res Function(VariableValue) then) =
+      _$VariableValueCopyWithImpl<$Res, VariableValue>;
+}
+
+/// @nodoc
+class _$VariableValueCopyWithImpl<$Res, $Val extends VariableValue>
+    implements $VariableValueCopyWith<$Res> {
+  _$VariableValueCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$HardcodedVariableValueCopyWith<$Res> {
+  factory _$$HardcodedVariableValueCopyWith(_$HardcodedVariableValue value,
+          $Res Function(_$HardcodedVariableValue) then) =
+      __$$HardcodedVariableValueCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$HardcodedVariableValueCopyWithImpl<$Res>
+    extends _$VariableValueCopyWithImpl<$Res, _$HardcodedVariableValue>
+    implements _$$HardcodedVariableValueCopyWith<$Res> {
+  __$$HardcodedVariableValueCopyWithImpl(_$HardcodedVariableValue _value,
+      $Res Function(_$HardcodedVariableValue) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$HardcodedVariableValue implements HardcodedVariableValue {
+  const _$HardcodedVariableValue();
+
+  @override
+  String toString() {
+    return 'VariableValue.hardcoded()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$HardcodedVariableValue);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() hardcoded,
+    required TResult Function() reference,
+  }) {
+    return hardcoded();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? hardcoded,
+    TResult? Function()? reference,
+  }) {
+    return hardcoded?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? hardcoded,
+    TResult Function()? reference,
+    required TResult orElse(),
+  }) {
+    if (hardcoded != null) {
+      return hardcoded();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HardcodedVariableValue value) hardcoded,
+    required TResult Function(ReferencedVariableValue value) reference,
+  }) {
+    return hardcoded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HardcodedVariableValue value)? hardcoded,
+    TResult? Function(ReferencedVariableValue value)? reference,
+  }) {
+    return hardcoded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HardcodedVariableValue value)? hardcoded,
+    TResult Function(ReferencedVariableValue value)? reference,
+    required TResult orElse(),
+  }) {
+    if (hardcoded != null) {
+      return hardcoded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class HardcodedVariableValue implements VariableValue {
+  const factory HardcodedVariableValue() = _$HardcodedVariableValue;
+}
+
+/// @nodoc
+abstract class _$$ReferencedVariableValueCopyWith<$Res> {
+  factory _$$ReferencedVariableValueCopyWith(_$ReferencedVariableValue value,
+          $Res Function(_$ReferencedVariableValue) then) =
+      __$$ReferencedVariableValueCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ReferencedVariableValueCopyWithImpl<$Res>
+    extends _$VariableValueCopyWithImpl<$Res, _$ReferencedVariableValue>
+    implements _$$ReferencedVariableValueCopyWith<$Res> {
+  __$$ReferencedVariableValueCopyWithImpl(_$ReferencedVariableValue _value,
+      $Res Function(_$ReferencedVariableValue) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ReferencedVariableValue implements ReferencedVariableValue {
+  const _$ReferencedVariableValue();
+
+  @override
+  String toString() {
+    return 'VariableValue.reference()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReferencedVariableValue);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() hardcoded,
+    required TResult Function() reference,
+  }) {
+    return reference();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? hardcoded,
+    TResult? Function()? reference,
+  }) {
+    return reference?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? hardcoded,
+    TResult Function()? reference,
+    required TResult orElse(),
+  }) {
+    if (reference != null) {
+      return reference();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(HardcodedVariableValue value) hardcoded,
+    required TResult Function(ReferencedVariableValue value) reference,
+  }) {
+    return reference(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(HardcodedVariableValue value)? hardcoded,
+    TResult? Function(ReferencedVariableValue value)? reference,
+  }) {
+    return reference?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(HardcodedVariableValue value)? hardcoded,
+    TResult Function(ReferencedVariableValue value)? reference,
+    required TResult orElse(),
+  }) {
+    if (reference != null) {
+      return reference(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReferencedVariableValue implements VariableValue {
+  const factory ReferencedVariableValue() = _$ReferencedVariableValue;
+}
+
 Mode _$ModeFromJson(Map<String, dynamic> json) {
   return _Mode.fromJson(json);
 }
@@ -395,7 +660,11 @@ mixin _$Collection {
   String get name => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get defaultModeId => throw _privateConstructorUsedError;
-  List<Mode> get modes => throw _privateConstructorUsedError;
+  List<Mode> get modes =>
+      throw _privateConstructorUsedError; //locally computed fields
+  List<Variable> get variables => throw _privateConstructorUsedError;
+  List<Collection> get dependsOnCollections =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -409,7 +678,13 @@ abstract class $CollectionCopyWith<$Res> {
           Collection value, $Res Function(Collection) then) =
       _$CollectionCopyWithImpl<$Res, Collection>;
   @useResult
-  $Res call({String name, String id, String defaultModeId, List<Mode> modes});
+  $Res call(
+      {String name,
+      String id,
+      String defaultModeId,
+      List<Mode> modes,
+      List<Variable> variables,
+      List<Collection> dependsOnCollections});
 }
 
 /// @nodoc
@@ -429,6 +704,8 @@ class _$CollectionCopyWithImpl<$Res, $Val extends Collection>
     Object? id = null,
     Object? defaultModeId = null,
     Object? modes = null,
+    Object? variables = null,
+    Object? dependsOnCollections = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -447,6 +724,14 @@ class _$CollectionCopyWithImpl<$Res, $Val extends Collection>
           ? _value.modes
           : modes // ignore: cast_nullable_to_non_nullable
               as List<Mode>,
+      variables: null == variables
+          ? _value.variables
+          : variables // ignore: cast_nullable_to_non_nullable
+              as List<Variable>,
+      dependsOnCollections: null == dependsOnCollections
+          ? _value.dependsOnCollections
+          : dependsOnCollections // ignore: cast_nullable_to_non_nullable
+              as List<Collection>,
     ) as $Val);
   }
 }
@@ -459,7 +744,13 @@ abstract class _$$_CollectionCopyWith<$Res>
       __$$_CollectionCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String id, String defaultModeId, List<Mode> modes});
+  $Res call(
+      {String name,
+      String id,
+      String defaultModeId,
+      List<Mode> modes,
+      List<Variable> variables,
+      List<Collection> dependsOnCollections});
 }
 
 /// @nodoc
@@ -477,6 +768,8 @@ class __$$_CollectionCopyWithImpl<$Res>
     Object? id = null,
     Object? defaultModeId = null,
     Object? modes = null,
+    Object? variables = null,
+    Object? dependsOnCollections = null,
   }) {
     return _then(_$_Collection(
       name: null == name
@@ -495,6 +788,14 @@ class __$$_CollectionCopyWithImpl<$Res>
           ? _value._modes
           : modes // ignore: cast_nullable_to_non_nullable
               as List<Mode>,
+      variables: null == variables
+          ? _value._variables
+          : variables // ignore: cast_nullable_to_non_nullable
+              as List<Variable>,
+      dependsOnCollections: null == dependsOnCollections
+          ? _value._dependsOnCollections
+          : dependsOnCollections // ignore: cast_nullable_to_non_nullable
+              as List<Collection>,
     ));
   }
 }
@@ -506,8 +807,12 @@ class _$_Collection implements _Collection {
       {required this.name,
       required this.id,
       required this.defaultModeId,
-      required final List<Mode> modes})
-      : _modes = modes;
+      required final List<Mode> modes,
+      final List<Variable> variables = const [],
+      final List<Collection> dependsOnCollections = const []})
+      : _modes = modes,
+        _variables = variables,
+        _dependsOnCollections = dependsOnCollections;
 
   factory _$_Collection.fromJson(Map<String, dynamic> json) =>
       _$$_CollectionFromJson(json);
@@ -526,9 +831,30 @@ class _$_Collection implements _Collection {
     return EqualUnmodifiableListView(_modes);
   }
 
+//locally computed fields
+  final List<Variable> _variables;
+//locally computed fields
+  @override
+  @JsonKey()
+  List<Variable> get variables {
+    if (_variables is EqualUnmodifiableListView) return _variables;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_variables);
+  }
+
+  final List<Collection> _dependsOnCollections;
+  @override
+  @JsonKey()
+  List<Collection> get dependsOnCollections {
+    if (_dependsOnCollections is EqualUnmodifiableListView)
+      return _dependsOnCollections;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_dependsOnCollections);
+  }
+
   @override
   String toString() {
-    return 'Collection(name: $name, id: $id, defaultModeId: $defaultModeId, modes: $modes)';
+    return 'Collection(name: $name, id: $id, defaultModeId: $defaultModeId, modes: $modes, variables: $variables, dependsOnCollections: $dependsOnCollections)';
   }
 
   @override
@@ -540,13 +866,23 @@ class _$_Collection implements _Collection {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.defaultModeId, defaultModeId) ||
                 other.defaultModeId == defaultModeId) &&
-            const DeepCollectionEquality().equals(other._modes, _modes));
+            const DeepCollectionEquality().equals(other._modes, _modes) &&
+            const DeepCollectionEquality()
+                .equals(other._variables, _variables) &&
+            const DeepCollectionEquality()
+                .equals(other._dependsOnCollections, _dependsOnCollections));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id, defaultModeId,
-      const DeepCollectionEquality().hash(_modes));
+  int get hashCode => Object.hash(
+      runtimeType,
+      name,
+      id,
+      defaultModeId,
+      const DeepCollectionEquality().hash(_modes),
+      const DeepCollectionEquality().hash(_variables),
+      const DeepCollectionEquality().hash(_dependsOnCollections));
 
   @JsonKey(ignore: true)
   @override
@@ -567,7 +903,9 @@ abstract class _Collection implements Collection {
       {required final String name,
       required final String id,
       required final String defaultModeId,
-      required final List<Mode> modes}) = _$_Collection;
+      required final List<Mode> modes,
+      final List<Variable> variables,
+      final List<Collection> dependsOnCollections}) = _$_Collection;
 
   factory _Collection.fromJson(Map<String, dynamic> json) =
       _$_Collection.fromJson;
@@ -580,6 +918,10 @@ abstract class _Collection implements Collection {
   String get defaultModeId;
   @override
   List<Mode> get modes;
+  @override //locally computed fields
+  List<Variable> get variables;
+  @override
+  List<Collection> get dependsOnCollections;
   @override
   @JsonKey(ignore: true)
   _$$_CollectionCopyWith<_$_Collection> get copyWith =>
