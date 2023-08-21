@@ -35,6 +35,7 @@ dart run figma_vars_to_dart \
 
 ### Use the code
 ```dart
+// generated code
 class ColorPrimitives {
     final Color white;
     final Color pink;
@@ -60,6 +61,7 @@ class ColorPrimitives {
 }
 ```
 ```dart
+// generated code
 class ColorSemantics {
   final Color background;
   final Color buttonPrimary;
