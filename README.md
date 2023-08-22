@@ -8,6 +8,10 @@ Bring your Figma design system and Flutter app implementation closer together by
 * No easy way to detect which variables changed/updated without manual inspection
 
 
+Use cases:
+* Light/dark mode
+* Adaptive layouts
+
 ## Installation
 ```yaml
 dev_dependencies:
@@ -17,6 +21,18 @@ dev_dependencies:
 
 ## Usage
 
+### Prepare your Figma
+
+Make sure your Figma project uses variables. 
+
+<details open>
+  <summary>Sample inputs for the demo purposes</summary>
+
+  ![Input 1](images/figma_collection_1.png)
+  ![Input 2](images/figma_collection_2.png)
+</details>
+
+
 ### Create the token
 
 In order to interact with Figma API you will need a personal access token. 
@@ -25,33 +41,38 @@ To create this token you can follow [this](https://help.figma.com/hc/en-us/artic
 ### Run the command
 
 ```bash
-dart run figma_vars_to_dart \
+dart pub run figma_vars_to_dart generate \
 	 --token $FIGMA_TOKEN \
-	 --fileId $1 \
-	 --dartOutputFolder lib/shared/design_constants \
+	 --fileId $YOUR_FIGMA_FILE_ID \ # you can find this string value in your file URL
+	 --dartOutputFolder lib/shared/ui_constants \
 	 --jsonOutputFile vars.json 
 ```
 
-
 ### Use the code
+
+<details open>
+  <summary>Generated files</summary>
+
+`color_primitives.dart`
 ```dart
-// generated code
+import 'package:flutter/widgets.dart';
+
 class ColorPrimitives {
-    final Color white;
-    final Color pink;
-    final Color green;
-    final Color black;
-    final Color blue;
+  final Color white;
+  final Color pink;
+  final Color green;
+  final Color black;
+  final Color blue;
 
-    ColorPrimitives({
-        required this.white,
-        required this.pink,
-        required this.green,
-        required this.black,
-        required this.blue,
-    });
+  ColorPrimitives({
+    required this.white,
+    required this.pink,
+    required this.green,
+    required this.black,
+    required this.blue,
+  });
 
-    factory ColorPrimitives.create() => ColorPrimitives(
+  factory ColorPrimitives.value() => ColorPrimitives(
         white: const Color(0xFFF2ECEC),
         pink: const Color(0xFFDD006A),
         green: const Color(0xFF8CC93E),
@@ -59,9 +80,13 @@ class ColorPrimitives {
         blue: const Color(0xFF3000F2),
       );
 }
+
 ```
+`color_semantics.dart`
 ```dart
-// generated code
+import 'package:flutter/widgets.dart';
+import 'ui_constants.dart';
+
 class ColorSemantics {
   final Color background;
   final Color buttonPrimary;
@@ -71,22 +96,30 @@ class ColorSemantics {
     required this.buttonPrimary,
   });
 
-  factory ColorSemantics.light(
-    ColorPrimitives colorPrimitives,
-  ) =>
+  factory ColorSemantics.light(ColorPrimitives colorPrimitives) =>
       ColorSemantics(
         background: colorPrimitives.white,
         buttonPrimary: colorPrimitives.blue,
       );
-  factory ColorSemantics.dark(
-    ColorPrimitives colorPrimitives,
-  ) =>
+
+  factory ColorSemantics.dark(ColorPrimitives colorPrimitives) =>
       ColorSemantics(
         background: colorPrimitives.black,
         buttonPrimary: colorPrimitives.green,
       );
 }
 ```
+
+`ui_constants.dart`
+
+```dart
+export 'color_primitives.dart';
+export 'color_semantics.dart';
+```
+</details>
+
+You can use any state management you prefer to provide these values to your widgets.
+
 ## Example
 See the [example](https://github.com/appsfactorygmbh/figma-vars-to-dart/tree/main/example) for more information.
 
