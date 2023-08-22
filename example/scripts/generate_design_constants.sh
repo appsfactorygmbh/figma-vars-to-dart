@@ -5,7 +5,7 @@ set -e
 rm -rf lib/shared/ui_constants
 results_folder=lib/shared/ui_constants
 
-dart run figma_vars_to_dart \
+dart pub run figma_vars_to_dart generate \
 	 --token $FIGMA_TOKEN \
 	 --fileId $1 \
 	 --dartOutputFolder $results_folder \

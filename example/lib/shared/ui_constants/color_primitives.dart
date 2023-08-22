@@ -15,7 +15,7 @@ class ColorPrimitives {
     required this.blue,
   });
 
-  factory ColorPrimitives.create() => ColorPrimitives(
+  factory ColorPrimitives.value() => ColorPrimitives(
         white: const Color(0xFFF2ECEC),
         pink: const Color(0xFFDD006A),
         green: const Color(0xFF8CC93E),

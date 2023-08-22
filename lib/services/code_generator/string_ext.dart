@@ -16,6 +16,15 @@ extension Ext on String {
     return camelCase;
   }
 
+  String snakeCase() {
+    List<String> words = trim().splitByMultipleSeparators();
+    return words.map((word) => word.toLowerCase()).join('_');
+  }
+
+  String normalize() {
+    return trim().splitByMultipleSeparators().join(' ').escapeKeywords();
+  }
+
   String pascalCase() {
     return camelCase().capitalizeFirstLetter();
   }
@@ -28,9 +37,11 @@ extension Ext on String {
     }
     return result;
   }
+
   String escapeSingleAndDoubleQuotes() {
     return replaceAll("'", "\\'").replaceAll('"', '\\"');
   }
+
   String capitalizeFirstLetter() {
     return '${this[0].toUpperCase()}${substring(1)}';
   }
@@ -47,6 +58,4 @@ extension _Helpers on String {
     final regex = RegExp(pattern);
     return split(regex);
   }
-
-
 }

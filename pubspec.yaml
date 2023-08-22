@@ -1,14 +1,16 @@
 name: figma_vars_to_dart
-description: A sample command-line application.
+description: Convert Figma variables to Dart
 version: 0.0.1
 publish_to: none
+repository: https://github.com/appsfactorygmbh/figma-vars-to-dart
+topics:
+  - figma
+  - generator
 
 environment:
   sdk: ^3.0.5
 
 dependencies:
-  flutter:
-    sdk: flutter
   dio: ^5.2.1+1
   freezed_annotation: ^2.4.1
   json_serializable: ^6.7.1
@@ -17,5 +19,5 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.4.6
   freezed: ^2.4.1
-  lints: ^2.0.0
+  lints: ^2.1.1
   test: ^1.21.0

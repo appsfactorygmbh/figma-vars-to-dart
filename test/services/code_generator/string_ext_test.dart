@@ -18,6 +18,14 @@ void main() {
     expect('color/brand'.pascalCase(), expected);
     expect('color_brand'.pascalCase(), expected);
   });
+  test('should format varibale name as sname_case', () {
+    var expected = 'color_brand';
+
+    expect('color-brand'.snakeCase(), expected);
+    expect('color brand'.snakeCase(), expected);
+    expect('color/brand'.snakeCase(), expected);
+    expect('color_brand'.snakeCase(), expected);
+  });
 
 
   test('should escape Dart keywords', (){
