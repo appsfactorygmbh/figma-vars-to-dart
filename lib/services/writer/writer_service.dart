@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../code_generator/code_generator.dart';
+import 'writer.dart';
 
 class WriterService {
   Future<void> write(List<WriteTask> tasks) async {
@@ -10,7 +10,7 @@ class WriterService {
       if (!file.existsSync()) {
         await file.create(recursive: true);
       }
-      file.writeAsString(task.content);
+      await file.writeAsString(task.content);
     }
   }
 }

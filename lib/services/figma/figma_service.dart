@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
 
+import 'api_parser.dart';
+import 'figma_entities.dart';
+
 class FigmaService {
-  Future<Map<String, dynamic>> getVariables({
+  Future<(FigmaResponse, Map<String, dynamic>)> getVariables({
     required String fileId,
     required String token,
+    String? jsonOutput,
   }) async {
     final dio = Dio();
     final response = await dio.get(
@@ -15,6 +19,9 @@ class FigmaService {
       ),
     );
 
-    return response.data;
+    return (
+      parseJsonFromApi(response.data),
+      response.data as Map<String, dynamic>,
+    );
   }
 }

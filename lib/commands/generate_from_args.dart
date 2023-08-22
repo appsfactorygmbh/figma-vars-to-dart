@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:figma_vars_to_dart/services/parser/code_entities.dart';
 
 import '../services/services.dart';
 
@@ -10,11 +11,13 @@ class GenerateFromArgsCommand extends Command {
   final FigmaService figmaApi;
   final ParserService parser;
   final WriterService writer;
+  final CodeGeneratorService generator;
 
   GenerateFromArgsCommand({
     required this.figmaApi,
     required this.parser,
     required this.writer,
+    required this.generator,
   }) {
     argParser.addOption('fileId', mandatory: true);
     argParser.addOption('token', mandatory: true);
@@ -42,20 +45,37 @@ class GenerateFromArgsCommand extends Command {
     final dartOutputFolder = args['dartOutputFolder'] as String;
 
     print('Fetching the file $fileId from Figma');
-    final json = await figmaApi.getVariables(token: token, fileId: fileId);
-    await _maybeSaveDebugJson(jsonOutput, writer, json);
+    final (response, rawResponse) = await figmaApi.getVariables(
+      token: token,
+      fileId: fileId,
+    );
+
+    if (jsonOutput != null) {
+      await writer.write([
+        WriteTask(
+          jsonOutput,
+          jsonEncode(rawResponse),
+        ),
+      ]);
+    }
 
     print('Parsing json response');
-    final collections = parser.parse(json['meta']);
+    final classes = parser.parse(response);
 
     print('Converting variables to Dart');
-    final parentDirectory = dartOutputFolder.split(Platform.pathSeparator).last;
+    await write(dartOutputFolder, classes);
+  }
 
-    final tasks = CodeGeneratorService().generateCode(
-      collections,
+  Future<void> write(
+    String dartOutputFolder,
+    List<CodeClass> classes,
+  ) async {
+    final parentDirectory = dartOutputFolder.split(Platform.pathSeparator).last;
+    final files = generator.generateFiles(
+      classes,
       parentDirectory,
     );
-    final tasksUpdated = tasks
+    final filesUpdated = files
         .map(
           (task) => task.copyWith(
             filePath: '$dartOutputFolder/${task.filePath}',
@@ -63,22 +83,6 @@ class GenerateFromArgsCommand extends Command {
         )
         .toList();
 
-    await writer.write(tasksUpdated);
-  }
-
-  Future<void> _maybeSaveDebugJson(
-    String? jsonOutput,
-    WriterService writer,
-    Map<String, dynamic> json,
-  ) async {
-    if (jsonOutput != null) {
-      print('Saving raw data to $jsonOutput');
-      await writer.write([
-        WriteTask(
-          jsonOutput,
-          jsonEncode(json),
-        ),
-      ]);
-    }
+    await writer.write(filesUpdated);
   }
 }

@@ -1,27 +1,21 @@
-import 'int_ext.dart';
-import '../parser/entities.dart';
-import 'code_generator.dart';
-import 'string_ext.dart';
+import 'package:figma_vars_to_dart/services/code_generator/string_ext.dart';
+
+import '../parser/code_entities.dart';
+import '../services.dart';
 
 class CodeGeneratorService {
-  List<WriteTask> generateCode(
-    List<Collection> collections,
+  List<WriteTask> generateFiles(
+    List<CodeClass> classes,
     String directoryName,
   ) {
-    final context = <String, dynamic>{};
-
-    final tasks = collections.map((collection) {
-      final fileName = '${collection.name.toLowerCase()}.dart';
-
+    final tasks = classes.map((codeClass) {
       final content = _getFileContent(
-        context,
-        collection,
-        collections,
+        codeClass,
         directoryName,
       );
 
       return WriteTask(
-        fileName,
+        codeClass.fileName,
         content,
       );
     });
@@ -36,177 +30,77 @@ class CodeGeneratorService {
   }
 
   String _getFileContent(
-    Map<String, dynamic> context,
-    Collection collection,
-    List<Collection> collections,
+    CodeClass codeClass,
     String directoryName,
   ) {
-    final members = _buildMembersList(collection, collections);
-
-    final className = collection.name.pascalCase().escapeKeywords();
-
+    final className = codeClass.name.pascalCase().escapeKeywords();
+    final classFields = codeClass.fields;
     int totalDependenciesCounter = 0;
-    final membersJoined = members
-        .map((member) => '  final ${member.type} ${member.name};')
-        .join('\n');
-    final constructorParams =
-        members.map((member) => '  required this.${member.name},').join('\n');
 
-    final modeFactories = collection.modes.map(_sanitizeModeName).map((mode) {
-      final factoryConstructorParams = members
-          .map((member) =>
-              '  ${member.name}: ${member.valuesByMode[mode.modeId]},')
-          .toList();
+    final fieldsJoined = classFields
+        .map((field) => '  final ${field.type.pascalCase()} ${field.name.camelCase()};')
+        .join('\n');
+
+    final constructorParams =
+        classFields.map((field) => '  required this.${field.name.camelCase()},').join('\n');
+
+    final modes = codeClass.fields.expand((f) => f.valuesByMode.keys);
+    final modesUnique = [
+      ...{...modes}
+    ];
+
+    final factoryConstructors = modesUnique.map((mode) {
+      final factoryConstructorParams = classFields.map((field) {
+        final assignedValue = field.valuesByMode[mode]!.when(
+          hardcoded: (text) => text,
+          reference: (type, field) => '${type.camelCase()}.${field.camelCase()}',
+        );
+        return '  ${field.name.camelCase()}: $assignedValue,';
+      }).toList();
+
       final paramsSorted = factoryConstructorParams.join('\n');
 
-      final dependencies = members
-          .map((member) => member.valuesByMode[mode.modeId] as String)
-          .where(isReference)
-          .map((dependingMember) => dependingMember.split('.')[0])
-          .map((dependency) =>
-              '${dependency.capitalizeFirstLetter().escapeKeywords()} $dependency,')
-          .toList();
+      final dependencies = codeClass.fields
+          .map(
+            (field) => field.valuesByMode[mode]!.when(
+              hardcoded: (_) => null,
+              reference: (type, field) => type,
+            ),
+          )
+          .where((type) => type != null)
+          .map(
+            (type) => '${type!.pascalCase()} ${type.camelCase()}',
+          );
 
       final dependenciesUnique = [
         ...{...dependencies}
       ].join('\n');
 
       totalDependenciesCounter += dependenciesUnique.length;
-      final factoryConstructorName = mode.name.camelCase().escapeKeywords();
+      final factoryConstructorName = mode.camelCase().escapeKeywords();
       return 'factory $className.$factoryConstructorName($dependenciesUnique) => $className(\n$paramsSorted\n);';
-    }).join('\n');
+    }).join('\n\n');
 
-    final constructor = '''
+    final defaultConstructor = '''
 $className ({
   $constructorParams
 });
 ''';
 
-    final content = '''
+    final importIfNeeded =
+        totalDependenciesCounter > 0 ? "import '$directoryName.dart';" : '';
+
+    final dartFileContent = '''
 import 'package:flutter/widgets.dart';
-${totalDependenciesCounter > 0 ? "import '$directoryName.dart';" : ''}
+$importIfNeeded
     
 class $className {
-$membersJoined
+$fieldsJoined
 
-$constructor
-$modeFactories
+$defaultConstructor
+$factoryConstructors
 }
     ''';
-    return content;
-  }
-
-  Mode _sanitizeModeName(mode) {
-    if (mode.name == 'Mode 1') {
-      return mode.copyWith(name: 'create');
-    } else {
-      return mode;
-    }
-  }
-
-  bool isReference(value) {
-    return !value.contains(' ') &&
-        value.contains('.') &&
-        value.split('.')[0] != 'Color';
-  }
-
-  List<({String name, String type, Map<String, String> valuesByMode})>
-      _buildMembersList(
-    Collection collection,
-    List<Collection> collections,
-  ) {
-    final members = collection.variables
-        .map(
-          (variable) => getCodeFor(
-            variable,
-            collection,
-            collections,
-          ),
-        )
-        .toList();
-    return members;
-  }
-
-  ({String type, String name, Map<String, String> valuesByMode}) getCodeFor(
-    Variable variable,
-    Collection collection,
-    List<Collection> collections,
-  ) {
-    final type = switch (variable.resolvedType) {
-      VariableType.float => 'double',
-      VariableType.color => 'Color',
-      VariableType.string => 'String',
-      VariableType.boolean => 'bool',
-    };
-    final name = variable.name.camelCase().escapeKeywords();
-    final valuesByMode = {
-      for (final m in collection.modes)
-        m.modeId: getValueBy(
-          m.modeId,
-          variable,
-          collection,
-          collections,
-        ),
-    };
-
-    return (
-      type: type,
-      name: name,
-      valuesByMode: valuesByMode,
-    );
-  }
-
-  String getValueBy(
-    String modeId,
-    Variable variable,
-    Collection collection,
-    List<Collection> collections,
-  ) {
-    String result;
-    final selectedValue = variable.valuesByMode[modeId];
-    if (selectedValue == null) return 'throw "could not find value"';
-    if (selectedValue is Map && selectedValue['type'] == 'VARIABLE_ALIAS') {
-      final id = selectedValue['id'];
-      try {
-        final variableEntry =
-            collection.variables.firstWhere((element) => element.id == id);
-
-        final collectionName = collections
-            .firstWhere(
-                (element) => element.id == variableEntry.variableCollectionId)
-            .name;
-        final dependencyName = collectionName.camelCase().escapeKeywords();
-
-        final referencedName = variableEntry.name.camelCase().escapeKeywords();
-
-        result = '$dependencyName.$referencedName';
-      } catch (_) {
-        result = 'throw "not found"';
-      }
-    } else {
-      result = switch (variable.resolvedType) {
-        VariableType.color =>
-          _formatColor(selectedValue as Map<String, dynamic>),
-        VariableType.float || VariableType.boolean => selectedValue.toString(),
-        VariableType.string =>
-          '"${selectedValue.toString().escapeSingleAndDoubleQuotes()}"',
-      };
-    }
-    return result;
-  }
-
-  String _formatColor(Map<String, dynamic> json) {
-    if (json['a'] == null) return 'throw 0';
-
-    final int a = (json['a'] * 255).round();
-    final int r = (json['r'] * 255).round();
-    final int g = (json['g'] * 255).round();
-    final int b = (json['b'] * 255).round();
-
-    final value = a.toHex() + r.toHex() + g.toHex() + b.toHex();
-
-    final color = 'Color(0x$value)';
-
-    return color;
+    return dartFileContent;
   }
 }
