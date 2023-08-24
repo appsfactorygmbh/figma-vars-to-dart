@@ -3,20 +3,24 @@
 Bring your Figma design system and Flutter app implementation closer together by generating Dart code directly from Figma API.
 
 ### Which problem are we trying to solve?
-* Figma codegen plugins for Flutter/Drat are limited
-* There's manual interaction with Figma UI required and takes time on bigger projects
+* Figma codegen plugins for Flutter/Dart are limited
+* There's manual interaction with Figma UI required and it takes time on bigger projects
 * No easy way to detect which variables changed/updated without manual inspection
 
 
 Use cases:
-* Light/dark mode
+* Light / dark mode
 * Adaptive layouts
 
 ## Installation
 ```yaml
 dev_dependencies:
-  figma_vars_to_dart: {latest version} 
-  # for now you can use git dependency
+  figma_vars_to_dart: ^0.0.1 
+```
+or 
+
+```bash
+flutter pub add figma_vars_to_dart --dev
 ```
 
 ## Usage
@@ -28,8 +32,8 @@ Make sure your Figma project uses variables.
 <details open>
   <summary>Sample inputs for the demo purposes</summary>
 
-  ![Input 1](images/figma_collection_1.png)
-  ![Input 2](images/figma_collection_2.png)
+  ![Input 1](https://raw.githubusercontent.com/appsfactorygmbh/figma-vars-to-dart/main/images/figma_collection_1.png)
+  ![Input 2](https://raw.githubusercontent.com/appsfactorygmbh/figma-vars-to-dart/main/images/figma_collection_2.png)
 </details>
 
 
