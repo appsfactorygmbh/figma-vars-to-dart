@@ -77,7 +77,7 @@ class GenerateFromArgsCommand extends Command {
     final collectionOverrides = args['collectionOverrides'] as List<String>;
     final variableOverrides = args['variableOverrides'] as List<String>;
 
-    logger.print('Fetching the file $fileId from Figma');
+    logger.log('Fetching the file $fileId from Figma');
     final (response, rawResponse) = await figmaApi.getVariables(
       token: token,
       fileId: fileId,
@@ -94,10 +94,10 @@ class GenerateFromArgsCommand extends Command {
       ]);
     }
 
-    logger.print('Parsing json response');
+    logger.log('Parsing json response');
     final classes = parser.parse(response);
 
-    logger.print('Converting variables to Dart');
+    logger.log('Converting variables to Dart');
     await write(dartOutputFolder, classes);
   }
 

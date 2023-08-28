@@ -1,5 +1,5 @@
 class LoggerService {
-  void print(String message) {
+  void log(String message) {
     print(message);
   }
 }

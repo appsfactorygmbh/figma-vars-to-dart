@@ -41,7 +41,7 @@ class ParserService {
               variable.name.normalize(),
             );
           } else {
-            logger.print('Could not find this variable $id');
+            logger.log('Could not find this variable $id');
             return null;
           }
         } else {
