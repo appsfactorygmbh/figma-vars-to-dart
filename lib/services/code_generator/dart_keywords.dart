@@ -16,4 +16,5 @@ Set<String> dartKeywords = {
   'deferred', 'hide', 'return', 'with',
   'do', 'if', 'sealed', 'yield',
   'dynamic', 'implements', 'set',
+  'Colors',
 };

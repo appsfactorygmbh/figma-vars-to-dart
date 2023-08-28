@@ -1,0 +1,24 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Dart",
+			"request": "launch",
+			"type": "dart",
+			"program": "bin/figma_vars_to_dart.dart",
+			"args": [
+				"generate",
+				"--token",
+				"${env:FIGMA_TOKEN}",
+				"--fileId",
+				"${env:FIGMA_FILE_ID}",
+				"--dartOutputFolder",
+				"example/lib/shared/ui/gen/figma",
+				"--jsonOutputFile",
+				"vars.json",
+				"--collectionOverrides",
+				"Colors=app_colors"
+			]
+		}
+	]
+}

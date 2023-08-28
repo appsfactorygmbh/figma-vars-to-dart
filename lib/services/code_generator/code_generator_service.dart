@@ -1,9 +1,14 @@
 import 'package:figma_vars_to_dart/services/code_generator/string_ext.dart';
+import 'package:figma_vars_to_dart/services/logger/logger.dart';
 
 import '../parser/code_entities.dart';
 import '../services.dart';
 
 class CodeGeneratorService {
+  final LoggerService logger;
+
+  CodeGeneratorService({required this.logger});
+
   List<WriteTask> generateFiles(
     List<CodeClass> classes,
     String directoryName,
@@ -20,12 +25,15 @@ class CodeGeneratorService {
       );
     });
 
+    final exportFileTask = WriteTask(
+      '$directoryName.dart',
+      tasks.map((task) => 'export \'${task.filePath}\';').join('\n'),
+    );
+    logger.log(exportFileTask.filePath);
+
     return [
       ...tasks,
-      WriteTask(
-        '$directoryName.dart',
-        tasks.map((task) => 'export \'${task.filePath}\';').join('\n'),
-      ),
+      exportFileTask,
     ];
   }
 
@@ -38,11 +46,12 @@ class CodeGeneratorService {
     int totalDependenciesCounter = 0;
 
     final fieldsJoined = classFields
-        .map((field) => '  final ${field.type.pascalCase()} ${field.name.camelCase()};')
+        .map((field) => '  final ${field.type} ${field.name.camelCase()};')
         .join('\n');
 
-    final constructorParams =
-        classFields.map((field) => '  required this.${field.name.camelCase()},').join('\n');
+    final constructorParams = classFields
+        .map((field) => '  required this.${field.name.camelCase()},')
+        .join('\n');
 
     final modes = codeClass.fields.expand((f) => f.valuesByMode.keys);
     final modesUnique = [
@@ -53,7 +62,8 @@ class CodeGeneratorService {
       final factoryConstructorParams = classFields.map((field) {
         final assignedValue = field.valuesByMode[mode]!.when(
           hardcoded: (text) => text,
-          reference: (type, field) => '${type.camelCase()}.${field.camelCase()}',
+          reference: (type, field) =>
+              '${type.camelCase()}.${field.camelCase()}',
         );
         return '  ${field.name.camelCase()}: $assignedValue,';
       }).toList();
