@@ -7,6 +7,8 @@ class FigmaService {
   Future<(FigmaResponse, Map<String, dynamic>)> getVariables({
     required String fileId,
     required String token,
+    required Map<String, String> collectionOverrides,
+    required Map<String, String> variableOverrides,
     String? jsonOutput,
   }) async {
     final dio = Dio();
@@ -19,9 +21,14 @@ class FigmaService {
       ),
     );
 
+    final responseData = response.data as Map<String, dynamic>;
     return (
-      parseJsonFromApi(response.data),
-      response.data as Map<String, dynamic>,
+      parseJsonFromApi(
+        responseData,
+        variableOverrides: variableOverrides,
+        collectionOverrides: collectionOverrides,
+      ),
+      responseData,
     );
   }
 }

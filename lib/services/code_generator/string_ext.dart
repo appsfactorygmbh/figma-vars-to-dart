@@ -1,11 +1,15 @@
 import 'package:figma_vars_to_dart/services/code_generator/dart_keywords.dart';
 
-extension Ext on String {
+extension StringExt on String {
   String camelCase() {
     if (isEmpty) {
       return '';
     }
-    List<String> words = trim().splitByMultipleSeparators();
+    final words = trim()
+        .splitByMultipleSeparators()
+        .where((word) => word.isNotEmpty)
+        .toList();
+
     String camelCase = words[0].toLowerCase();
 
     for (int i = 1; i < words.length; i++) {
@@ -54,7 +58,7 @@ extension _Helpers on String {
       '/',
       '_',
       '-',
-    ].map((sep) => "\\$sep").join("|");
+    ].map((sep) => '\\$sep').join('|');
     final regex = RegExp(pattern);
     return split(regex);
   }
