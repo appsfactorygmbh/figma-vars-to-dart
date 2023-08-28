@@ -29,7 +29,7 @@ class CodeGeneratorService {
       '$directoryName.dart',
       tasks.map((task) => 'export \'${task.filePath}\';').join('\n'),
     );
-    logger.print(exportFileTask.filePath);
+    logger.log(exportFileTask.filePath);
 
     return [
       ...tasks,
