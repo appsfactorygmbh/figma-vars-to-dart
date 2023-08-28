@@ -3,23 +3,29 @@ import 'dart:io';
 
 import 'package:figma_vars_to_dart/services/figma/api_parser.dart';
 import 'package:figma_vars_to_dart/services/figma/figma_entities.dart';
+import 'package:figma_vars_to_dart/services/logger/logger.dart';
 import 'package:figma_vars_to_dart/services/parser/code_entities.dart';
 import 'package:figma_vars_to_dart/services/services.dart';
 import 'package:test/test.dart';
 
 void main() {
   late FigmaResponse figmaResponse;
+  final logger = LoggerService();
 
   setUpAll(() {
     // contains color_primitives, color_semantics collections
     // color semantics imports color_primitives and has light and dark modes
     final text = File('example_response.json').readAsStringSync();
     final json = jsonDecode(text);
-    figmaResponse = parseJsonFromApi(json);
+    figmaResponse = parseJsonFromApi(
+      json,
+      variableOverrides: {},
+      collectionOverrides: {},
+    );
   });
 
   test('parser result should not be empty', () async {
-    final classes = ParserService().parse(figmaResponse);
+    final classes = ParserService(logger: logger).parse(figmaResponse);
 
     final colorPrimitives = classes[0];
     final colorSemantics = classes[1];
@@ -29,7 +35,7 @@ void main() {
   });
 
   test('parser result should parse class fields', () async {
-    final classes = ParserService().parse(figmaResponse);
+    final classes = ParserService(logger: logger).parse(figmaResponse);
 
     final colorPrimitives = classes[0];
     final colorSemantics = classes[1];

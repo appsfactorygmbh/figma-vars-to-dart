@@ -2,13 +2,21 @@ import 'package:figma_vars_to_dart/services/code_generator/string_ext.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('should format varibale name as camelCase', () {
+  test('should format variable name as camelCase', () {
     var expected = 'colorBrand';
 
     expect('color-brand'.camelCase(), expected);
     expect('color brand'.camelCase(), expected);
     expect('color/brand'.camelCase(), expected);
     expect('color_brand'.camelCase(), expected);
+  });
+  test('should format variable ending with separator as camelCase', () {
+    var expected = 'colorBrand';
+
+    expect('color-brand-'.camelCase(), expected);
+    expect('color brand '.camelCase(), expected);
+    expect('color/brand/'.camelCase(), expected);
+    expect('color_brand_'.camelCase(), expected);
   });
   test('should format varibale name as PamelCase', () {
     var expected = 'ColorBrand';
@@ -27,8 +35,7 @@ void main() {
     expect('color_brand'.snakeCase(), expected);
   });
 
-
-  test('should escape Dart keywords', (){
+  test('should escape Dart keywords', () {
     expect('await'.escapeKeywords(), 'await_');
     expect('return'.escapeKeywords(), 'return_');
     expect('class'.escapeKeywords(), 'class_');
