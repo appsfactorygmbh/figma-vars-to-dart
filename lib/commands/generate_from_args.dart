@@ -54,6 +54,11 @@ class GenerateFromArgsCommand extends Command {
       'variableOverrides',
       defaultsTo: [],
     );
+    argParser.addMultiOption(
+      'excludedCollections',
+      defaultsTo: [],
+      help: 'Optional comma-separated list of collections to exclude',
+    );
   }
 
   @override
@@ -76,6 +81,7 @@ class GenerateFromArgsCommand extends Command {
 
     final collectionOverrides = args['collectionOverrides'] as List<String>;
     final variableOverrides = args['variableOverrides'] as List<String>;
+    final excludedCollections = args['excludedCollections'] as List<String>;
 
     logger.log('Fetching the file $fileId from Figma');
     final (response, rawResponse) = await figmaApi.getVariables(
@@ -83,6 +89,7 @@ class GenerateFromArgsCommand extends Command {
       fileId: fileId,
       variableOverrides: parseOverrides(variableOverrides),
       collectionOverrides: parseOverrides(collectionOverrides),
+      excludedCollections: excludedCollections.toSet(),
     );
 
     if (jsonOutput != null) {

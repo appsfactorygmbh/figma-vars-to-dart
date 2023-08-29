@@ -12,9 +12,13 @@ class ParserService {
   List<CodeClass> parse(FigmaResponse response) {
     final allVariables = response.variables;
     final allCollections = response.collections;
+
     final collectionsById = {
       for (final collection in allCollections) collection.id: collection
     };
+
+    renameCollectionsWithDuplicatedNames(collectionsById);
+
     final variablesById = {
       for (final variable in allVariables)
         variable.id: (
@@ -90,7 +94,25 @@ class ParserService {
       );
     }
 
-    return allCollections.map(mapClass).toList();
+    return collectionsById.values.map(mapClass).toList();
+  }
+
+  void renameCollectionsWithDuplicatedNames(
+    Map<String, FigmaCollection> collectionsById,
+  ) {
+    for (final collection in collectionsById.values) {
+      final shouldUpdate = collectionsById.values
+          .where((coll) =>
+              coll.name.normalize() == collection.name.normalize() &&
+              coll.id != collection.id)
+          .isNotEmpty;
+
+      if (shouldUpdate) {
+        collectionsById[collection.id] = collection.copyWith(
+          name: '${collection.name}2',
+        );
+      }
+    }
   }
 
   String sanitizeModeName(String modeName) {
