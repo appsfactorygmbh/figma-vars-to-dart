@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:figma_vars_to_dart/services/figma/api_parser.dart';
 import 'package:figma_vars_to_dart/services/figma/figma_entities.dart';
 import 'package:figma_vars_to_dart/services/logger/logger.dart';
 import 'package:figma_vars_to_dart/services/parser/code_entities.dart';
@@ -21,6 +20,7 @@ void main() {
       json,
       variableOverrides: {},
       collectionOverrides: {},
+      excludedCollections: {},
     );
   });
 
