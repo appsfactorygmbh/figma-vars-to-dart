@@ -8,4 +8,3 @@ class WriteTask with _$WriteTask {
     String content,
   ) = _WriteTask;
 }
-

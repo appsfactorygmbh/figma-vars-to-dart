@@ -21,7 +21,8 @@ class FigmaResponse with _$FigmaResponse {
     required List<FigmaCollection> collections,
   }) = _FigmaResponse;
 
-  factory FigmaResponse.fromJson(Map<String, dynamic> json) => _$FigmaResponseFromJson(json);
+  factory FigmaResponse.fromJson(Map<String, dynamic> json) =>
+      _$FigmaResponseFromJson(json);
 }
 
 @freezed

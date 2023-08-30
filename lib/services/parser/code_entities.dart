@@ -26,4 +26,3 @@ sealed class VariableValue with _$VariableValue {
   const factory VariableValue.reference(String className, String field) =
       ReferencedVariableValue;
 }
-
