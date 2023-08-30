@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 
-import 'api_parser.dart';
 import 'figma_entities.dart';
 
 class FigmaService {
@@ -9,6 +8,7 @@ class FigmaService {
     required String token,
     required Map<String, String> collectionOverrides,
     required Map<String, String> variableOverrides,
+    required Set<String> excludedCollections,
     String? jsonOutput,
   }) async {
     final dio = Dio();
@@ -27,8 +27,55 @@ class FigmaService {
         responseData,
         variableOverrides: variableOverrides,
         collectionOverrides: collectionOverrides,
+        excludedCollections: excludedCollections,
       ),
       responseData,
     );
   }
+}
+
+FigmaResponse parseJsonFromApi(
+  apiResponse, {
+  required Map<String, String> collectionOverrides,
+  required Map<String, String> variableOverrides,
+  required Set<String> excludedCollections,
+}) {
+  final json = apiResponse['meta'];
+  final collectionsJson = json['variableCollections'] as Map<String, dynamic>;
+  final variablesJson = json['variables'] as Map<String, dynamic>;
+
+  bool notExcluded(FigmaCollection collection) {
+    return !excludedCollections.contains(collection.name) &&
+        !excludedCollections.contains(collection.id);
+  }
+
+  final allCollections = collectionsJson.values
+      .map((value) {
+        final collection =
+            FigmaCollection.fromJson(value as Map<String, dynamic>);
+        final name = collection.name;
+        return collection.copyWith(
+          name: collectionOverrides[name] ?? name,
+        );
+      })
+      .where(notExcluded)
+      .toList();
+
+  final allVariables = variablesJson.values
+      .map(
+        (value) {
+          final variable =
+              FigmaVariable.fromJson(value as Map<String, dynamic>);
+          final name = variable.name;
+          return variable.copyWith(name: variableOverrides[name] ?? name);
+        },
+      )
+      .where((variable) =>
+          !excludedCollections.contains(variable.variableCollectionId))
+      .toList();
+
+  return FigmaResponse(
+    variables: allVariables,
+    collections: allCollections,
+  );
 }
