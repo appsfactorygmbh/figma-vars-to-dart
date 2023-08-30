@@ -15,7 +15,7 @@ Use cases:
 ## Installation
 ```yaml
 dev_dependencies:
-  figma_vars_to_dart: ^0.0.1 
+  figma_vars_to_dart: ^0.0.4 
 ```
 or 
 
