@@ -101,6 +101,8 @@ $className ({
         totalDependenciesCounter > 0 ? "import '$directoryName.dart';" : '';
 
     final dartFileContent = '''
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 import 'package:flutter/widgets.dart';
 $importIfNeeded
     
