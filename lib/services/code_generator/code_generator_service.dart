@@ -84,7 +84,7 @@ class CodeGeneratorService {
 
       final dependenciesUnique = [
         ...{...dependencies}
-      ].join('\n');
+      ].join(', ');
 
       totalDependenciesCounter += dependenciesUnique.length;
       final factoryConstructorName = mode.camelCase().escapeKeywords();
