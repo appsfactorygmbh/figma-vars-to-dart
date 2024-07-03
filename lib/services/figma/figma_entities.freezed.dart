@@ -12,7 +12,7 @@ part of 'figma_entities.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 FigmaResponse _$FigmaResponseFromJson(Map<String, dynamic> json) {
   return _FigmaResponse.fromJson(json);
@@ -68,22 +68,22 @@ class _$FigmaResponseCopyWithImpl<$Res, $Val extends FigmaResponse>
 }
 
 /// @nodoc
-abstract class _$$_FigmaResponseCopyWith<$Res>
+abstract class _$$FigmaResponseImplCopyWith<$Res>
     implements $FigmaResponseCopyWith<$Res> {
-  factory _$$_FigmaResponseCopyWith(
-          _$_FigmaResponse value, $Res Function(_$_FigmaResponse) then) =
-      __$$_FigmaResponseCopyWithImpl<$Res>;
+  factory _$$FigmaResponseImplCopyWith(
+          _$FigmaResponseImpl value, $Res Function(_$FigmaResponseImpl) then) =
+      __$$FigmaResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<FigmaVariable> variables, List<FigmaCollection> collections});
 }
 
 /// @nodoc
-class __$$_FigmaResponseCopyWithImpl<$Res>
-    extends _$FigmaResponseCopyWithImpl<$Res, _$_FigmaResponse>
-    implements _$$_FigmaResponseCopyWith<$Res> {
-  __$$_FigmaResponseCopyWithImpl(
-      _$_FigmaResponse _value, $Res Function(_$_FigmaResponse) _then)
+class __$$FigmaResponseImplCopyWithImpl<$Res>
+    extends _$FigmaResponseCopyWithImpl<$Res, _$FigmaResponseImpl>
+    implements _$$FigmaResponseImplCopyWith<$Res> {
+  __$$FigmaResponseImplCopyWithImpl(
+      _$FigmaResponseImpl _value, $Res Function(_$FigmaResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_FigmaResponseCopyWithImpl<$Res>
     Object? variables = null,
     Object? collections = null,
   }) {
-    return _then(_$_FigmaResponse(
+    return _then(_$FigmaResponseImpl(
       variables: null == variables
           ? _value._variables
           : variables // ignore: cast_nullable_to_non_nullable
@@ -107,15 +107,15 @@ class __$$_FigmaResponseCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_FigmaResponse implements _FigmaResponse {
-  const _$_FigmaResponse(
+class _$FigmaResponseImpl implements _FigmaResponse {
+  const _$FigmaResponseImpl(
       {required final List<FigmaVariable> variables,
       required final List<FigmaCollection> collections})
       : _variables = variables,
         _collections = collections;
 
-  factory _$_FigmaResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_FigmaResponseFromJson(json);
+  factory _$FigmaResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FigmaResponseImplFromJson(json);
 
   final List<FigmaVariable> _variables;
   @override
@@ -139,10 +139,10 @@ class _$_FigmaResponse implements _FigmaResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FigmaResponse &&
+            other is _$FigmaResponseImpl &&
             const DeepCollectionEquality()
                 .equals(other._variables, _variables) &&
             const DeepCollectionEquality()
@@ -159,12 +159,12 @@ class _$_FigmaResponse implements _FigmaResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_FigmaResponseCopyWith<_$_FigmaResponse> get copyWith =>
-      __$$_FigmaResponseCopyWithImpl<_$_FigmaResponse>(this, _$identity);
+  _$$FigmaResponseImplCopyWith<_$FigmaResponseImpl> get copyWith =>
+      __$$FigmaResponseImplCopyWithImpl<_$FigmaResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FigmaResponseToJson(
+    return _$$FigmaResponseImplToJson(
       this,
     );
   }
@@ -173,10 +173,10 @@ class _$_FigmaResponse implements _FigmaResponse {
 abstract class _FigmaResponse implements FigmaResponse {
   const factory _FigmaResponse(
       {required final List<FigmaVariable> variables,
-      required final List<FigmaCollection> collections}) = _$_FigmaResponse;
+      required final List<FigmaCollection> collections}) = _$FigmaResponseImpl;
 
   factory _FigmaResponse.fromJson(Map<String, dynamic> json) =
-      _$_FigmaResponse.fromJson;
+      _$FigmaResponseImpl.fromJson;
 
   @override
   List<FigmaVariable> get variables;
@@ -184,7 +184,7 @@ abstract class _FigmaResponse implements FigmaResponse {
   List<FigmaCollection> get collections;
   @override
   @JsonKey(ignore: true)
-  _$$_FigmaResponseCopyWith<_$_FigmaResponse> get copyWith =>
+  _$$FigmaResponseImplCopyWith<_$FigmaResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -241,18 +241,20 @@ class _$FigmaModeCopyWithImpl<$Res, $Val extends FigmaMode>
 }
 
 /// @nodoc
-abstract class _$$_ModeCopyWith<$Res> implements $FigmaModeCopyWith<$Res> {
-  factory _$$_ModeCopyWith(_$_Mode value, $Res Function(_$_Mode) then) =
-      __$$_ModeCopyWithImpl<$Res>;
+abstract class _$$ModeImplCopyWith<$Res> implements $FigmaModeCopyWith<$Res> {
+  factory _$$ModeImplCopyWith(
+          _$ModeImpl value, $Res Function(_$ModeImpl) then) =
+      __$$ModeImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String modeId, String name});
 }
 
 /// @nodoc
-class __$$_ModeCopyWithImpl<$Res> extends _$FigmaModeCopyWithImpl<$Res, _$_Mode>
-    implements _$$_ModeCopyWith<$Res> {
-  __$$_ModeCopyWithImpl(_$_Mode _value, $Res Function(_$_Mode) _then)
+class __$$ModeImplCopyWithImpl<$Res>
+    extends _$FigmaModeCopyWithImpl<$Res, _$ModeImpl>
+    implements _$$ModeImplCopyWith<$Res> {
+  __$$ModeImplCopyWithImpl(_$ModeImpl _value, $Res Function(_$ModeImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -261,7 +263,7 @@ class __$$_ModeCopyWithImpl<$Res> extends _$FigmaModeCopyWithImpl<$Res, _$_Mode>
     Object? modeId = null,
     Object? name = null,
   }) {
-    return _then(_$_Mode(
+    return _then(_$ModeImpl(
       modeId: null == modeId
           ? _value.modeId
           : modeId // ignore: cast_nullable_to_non_nullable
@@ -276,10 +278,11 @@ class __$$_ModeCopyWithImpl<$Res> extends _$FigmaModeCopyWithImpl<$Res, _$_Mode>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Mode implements _Mode {
-  const _$_Mode({required this.modeId, required this.name});
+class _$ModeImpl implements _Mode {
+  const _$ModeImpl({required this.modeId, required this.name});
 
-  factory _$_Mode.fromJson(Map<String, dynamic> json) => _$$_ModeFromJson(json);
+  factory _$ModeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ModeImplFromJson(json);
 
   @override
   final String modeId;
@@ -292,10 +295,10 @@ class _$_Mode implements _Mode {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Mode &&
+            other is _$ModeImpl &&
             (identical(other.modeId, modeId) || other.modeId == modeId) &&
             (identical(other.name, name) || other.name == name));
   }
@@ -307,12 +310,12 @@ class _$_Mode implements _Mode {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ModeCopyWith<_$_Mode> get copyWith =>
-      __$$_ModeCopyWithImpl<_$_Mode>(this, _$identity);
+  _$$ModeImplCopyWith<_$ModeImpl> get copyWith =>
+      __$$ModeImplCopyWithImpl<_$ModeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ModeToJson(
+    return _$$ModeImplToJson(
       this,
     );
   }
@@ -320,9 +323,9 @@ class _$_Mode implements _Mode {
 
 abstract class _Mode implements FigmaMode {
   const factory _Mode(
-      {required final String modeId, required final String name}) = _$_Mode;
+      {required final String modeId, required final String name}) = _$ModeImpl;
 
-  factory _Mode.fromJson(Map<String, dynamic> json) = _$_Mode.fromJson;
+  factory _Mode.fromJson(Map<String, dynamic> json) = _$ModeImpl.fromJson;
 
   @override
   String get modeId;
@@ -330,7 +333,8 @@ abstract class _Mode implements FigmaMode {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_ModeCopyWith<_$_Mode> get copyWith => throw _privateConstructorUsedError;
+  _$$ModeImplCopyWith<_$ModeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 FigmaVariable _$FigmaVariableFromJson(Map<String, dynamic> json) {
@@ -344,6 +348,7 @@ mixin _$FigmaVariable {
   FigmaVariableType get resolvedType => throw _privateConstructorUsedError;
   Map<String, dynamic> get valuesByMode => throw _privateConstructorUsedError;
   String get variableCollectionId => throw _privateConstructorUsedError;
+  bool get remote => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -362,7 +367,8 @@ abstract class $FigmaVariableCopyWith<$Res> {
       String name,
       FigmaVariableType resolvedType,
       Map<String, dynamic> valuesByMode,
-      String variableCollectionId});
+      String variableCollectionId,
+      bool remote});
 }
 
 /// @nodoc
@@ -383,6 +389,7 @@ class _$FigmaVariableCopyWithImpl<$Res, $Val extends FigmaVariable>
     Object? resolvedType = null,
     Object? valuesByMode = null,
     Object? variableCollectionId = null,
+    Object? remote = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -405,16 +412,20 @@ class _$FigmaVariableCopyWithImpl<$Res, $Val extends FigmaVariable>
           ? _value.variableCollectionId
           : variableCollectionId // ignore: cast_nullable_to_non_nullable
               as String,
+      remote: null == remote
+          ? _value.remote
+          : remote // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_VariableCopyWith<$Res>
+abstract class _$$VariableImplCopyWith<$Res>
     implements $FigmaVariableCopyWith<$Res> {
-  factory _$$_VariableCopyWith(
-          _$_Variable value, $Res Function(_$_Variable) then) =
-      __$$_VariableCopyWithImpl<$Res>;
+  factory _$$VariableImplCopyWith(
+          _$VariableImpl value, $Res Function(_$VariableImpl) then) =
+      __$$VariableImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -422,15 +433,16 @@ abstract class _$$_VariableCopyWith<$Res>
       String name,
       FigmaVariableType resolvedType,
       Map<String, dynamic> valuesByMode,
-      String variableCollectionId});
+      String variableCollectionId,
+      bool remote});
 }
 
 /// @nodoc
-class __$$_VariableCopyWithImpl<$Res>
-    extends _$FigmaVariableCopyWithImpl<$Res, _$_Variable>
-    implements _$$_VariableCopyWith<$Res> {
-  __$$_VariableCopyWithImpl(
-      _$_Variable _value, $Res Function(_$_Variable) _then)
+class __$$VariableImplCopyWithImpl<$Res>
+    extends _$FigmaVariableCopyWithImpl<$Res, _$VariableImpl>
+    implements _$$VariableImplCopyWith<$Res> {
+  __$$VariableImplCopyWithImpl(
+      _$VariableImpl _value, $Res Function(_$VariableImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -441,8 +453,9 @@ class __$$_VariableCopyWithImpl<$Res>
     Object? resolvedType = null,
     Object? valuesByMode = null,
     Object? variableCollectionId = null,
+    Object? remote = null,
   }) {
-    return _then(_$_Variable(
+    return _then(_$VariableImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -463,23 +476,28 @@ class __$$_VariableCopyWithImpl<$Res>
           ? _value.variableCollectionId
           : variableCollectionId // ignore: cast_nullable_to_non_nullable
               as String,
+      remote: null == remote
+          ? _value.remote
+          : remote // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Variable implements _Variable {
-  const _$_Variable(
+class _$VariableImpl implements _Variable {
+  const _$VariableImpl(
       {required this.id,
       required this.name,
       required this.resolvedType,
       required final Map<String, dynamic> valuesByMode,
-      required this.variableCollectionId})
+      required this.variableCollectionId,
+      required this.remote})
       : _valuesByMode = valuesByMode;
 
-  factory _$_Variable.fromJson(Map<String, dynamic> json) =>
-      _$$_VariableFromJson(json);
+  factory _$VariableImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VariableImplFromJson(json);
 
   @override
   final String id;
@@ -497,17 +515,19 @@ class _$_Variable implements _Variable {
 
   @override
   final String variableCollectionId;
+  @override
+  final bool remote;
 
   @override
   String toString() {
-    return 'FigmaVariable(id: $id, name: $name, resolvedType: $resolvedType, valuesByMode: $valuesByMode, variableCollectionId: $variableCollectionId)';
+    return 'FigmaVariable(id: $id, name: $name, resolvedType: $resolvedType, valuesByMode: $valuesByMode, variableCollectionId: $variableCollectionId, remote: $remote)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Variable &&
+            other is _$VariableImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.resolvedType, resolvedType) ||
@@ -515,23 +535,30 @@ class _$_Variable implements _Variable {
             const DeepCollectionEquality()
                 .equals(other._valuesByMode, _valuesByMode) &&
             (identical(other.variableCollectionId, variableCollectionId) ||
-                other.variableCollectionId == variableCollectionId));
+                other.variableCollectionId == variableCollectionId) &&
+            (identical(other.remote, remote) || other.remote == remote));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, resolvedType,
-      const DeepCollectionEquality().hash(_valuesByMode), variableCollectionId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      resolvedType,
+      const DeepCollectionEquality().hash(_valuesByMode),
+      variableCollectionId,
+      remote);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VariableCopyWith<_$_Variable> get copyWith =>
-      __$$_VariableCopyWithImpl<_$_Variable>(this, _$identity);
+  _$$VariableImplCopyWith<_$VariableImpl> get copyWith =>
+      __$$VariableImplCopyWithImpl<_$VariableImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VariableToJson(
+    return _$$VariableImplToJson(
       this,
     );
   }
@@ -543,9 +570,11 @@ abstract class _Variable implements FigmaVariable {
       required final String name,
       required final FigmaVariableType resolvedType,
       required final Map<String, dynamic> valuesByMode,
-      required final String variableCollectionId}) = _$_Variable;
+      required final String variableCollectionId,
+      required final bool remote}) = _$VariableImpl;
 
-  factory _Variable.fromJson(Map<String, dynamic> json) = _$_Variable.fromJson;
+  factory _Variable.fromJson(Map<String, dynamic> json) =
+      _$VariableImpl.fromJson;
 
   @override
   String get id;
@@ -558,8 +587,10 @@ abstract class _Variable implements FigmaVariable {
   @override
   String get variableCollectionId;
   @override
+  bool get remote;
+  @override
   @JsonKey(ignore: true)
-  _$$_VariableCopyWith<_$_Variable> get copyWith =>
+  _$$VariableImplCopyWith<_$VariableImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -573,6 +604,7 @@ mixin _$FigmaCollection {
   String get id => throw _privateConstructorUsedError;
   String get defaultModeId => throw _privateConstructorUsedError;
   List<FigmaMode> get modes => throw _privateConstructorUsedError;
+  bool get remote => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -587,7 +619,11 @@ abstract class $FigmaCollectionCopyWith<$Res> {
       _$FigmaCollectionCopyWithImpl<$Res, FigmaCollection>;
   @useResult
   $Res call(
-      {String name, String id, String defaultModeId, List<FigmaMode> modes});
+      {String name,
+      String id,
+      String defaultModeId,
+      List<FigmaMode> modes,
+      bool remote});
 }
 
 /// @nodoc
@@ -607,6 +643,7 @@ class _$FigmaCollectionCopyWithImpl<$Res, $Val extends FigmaCollection>
     Object? id = null,
     Object? defaultModeId = null,
     Object? modes = null,
+    Object? remote = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -625,28 +662,36 @@ class _$FigmaCollectionCopyWithImpl<$Res, $Val extends FigmaCollection>
           ? _value.modes
           : modes // ignore: cast_nullable_to_non_nullable
               as List<FigmaMode>,
+      remote: null == remote
+          ? _value.remote
+          : remote // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_CollectionCopyWith<$Res>
+abstract class _$$CollectionImplCopyWith<$Res>
     implements $FigmaCollectionCopyWith<$Res> {
-  factory _$$_CollectionCopyWith(
-          _$_Collection value, $Res Function(_$_Collection) then) =
-      __$$_CollectionCopyWithImpl<$Res>;
+  factory _$$CollectionImplCopyWith(
+          _$CollectionImpl value, $Res Function(_$CollectionImpl) then) =
+      __$$CollectionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String name, String id, String defaultModeId, List<FigmaMode> modes});
+      {String name,
+      String id,
+      String defaultModeId,
+      List<FigmaMode> modes,
+      bool remote});
 }
 
 /// @nodoc
-class __$$_CollectionCopyWithImpl<$Res>
-    extends _$FigmaCollectionCopyWithImpl<$Res, _$_Collection>
-    implements _$$_CollectionCopyWith<$Res> {
-  __$$_CollectionCopyWithImpl(
-      _$_Collection _value, $Res Function(_$_Collection) _then)
+class __$$CollectionImplCopyWithImpl<$Res>
+    extends _$FigmaCollectionCopyWithImpl<$Res, _$CollectionImpl>
+    implements _$$CollectionImplCopyWith<$Res> {
+  __$$CollectionImplCopyWithImpl(
+      _$CollectionImpl _value, $Res Function(_$CollectionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -656,8 +701,9 @@ class __$$_CollectionCopyWithImpl<$Res>
     Object? id = null,
     Object? defaultModeId = null,
     Object? modes = null,
+    Object? remote = null,
   }) {
-    return _then(_$_Collection(
+    return _then(_$CollectionImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -674,22 +720,27 @@ class __$$_CollectionCopyWithImpl<$Res>
           ? _value._modes
           : modes // ignore: cast_nullable_to_non_nullable
               as List<FigmaMode>,
+      remote: null == remote
+          ? _value.remote
+          : remote // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Collection implements _Collection {
-  const _$_Collection(
+class _$CollectionImpl implements _Collection {
+  const _$CollectionImpl(
       {required this.name,
       required this.id,
       required this.defaultModeId,
-      required final List<FigmaMode> modes})
+      required final List<FigmaMode> modes,
+      required this.remote})
       : _modes = modes;
 
-  factory _$_Collection.fromJson(Map<String, dynamic> json) =>
-      _$$_CollectionFromJson(json);
+  factory _$CollectionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CollectionImplFromJson(json);
 
   @override
   final String name;
@@ -706,36 +757,40 @@ class _$_Collection implements _Collection {
   }
 
   @override
+  final bool remote;
+
+  @override
   String toString() {
-    return 'FigmaCollection(name: $name, id: $id, defaultModeId: $defaultModeId, modes: $modes)';
+    return 'FigmaCollection(name: $name, id: $id, defaultModeId: $defaultModeId, modes: $modes, remote: $remote)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Collection &&
+            other is _$CollectionImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.defaultModeId, defaultModeId) ||
                 other.defaultModeId == defaultModeId) &&
-            const DeepCollectionEquality().equals(other._modes, _modes));
+            const DeepCollectionEquality().equals(other._modes, _modes) &&
+            (identical(other.remote, remote) || other.remote == remote));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, id, defaultModeId,
-      const DeepCollectionEquality().hash(_modes));
+      const DeepCollectionEquality().hash(_modes), remote);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CollectionCopyWith<_$_Collection> get copyWith =>
-      __$$_CollectionCopyWithImpl<_$_Collection>(this, _$identity);
+  _$$CollectionImplCopyWith<_$CollectionImpl> get copyWith =>
+      __$$CollectionImplCopyWithImpl<_$CollectionImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CollectionToJson(
+    return _$$CollectionImplToJson(
       this,
     );
   }
@@ -746,10 +801,11 @@ abstract class _Collection implements FigmaCollection {
       {required final String name,
       required final String id,
       required final String defaultModeId,
-      required final List<FigmaMode> modes}) = _$_Collection;
+      required final List<FigmaMode> modes,
+      required final bool remote}) = _$CollectionImpl;
 
   factory _Collection.fromJson(Map<String, dynamic> json) =
-      _$_Collection.fromJson;
+      _$CollectionImpl.fromJson;
 
   @override
   String get name;
@@ -760,7 +816,9 @@ abstract class _Collection implements FigmaCollection {
   @override
   List<FigmaMode> get modes;
   @override
+  bool get remote;
+  @override
   @JsonKey(ignore: true)
-  _$$_CollectionCopyWith<_$_Collection> get copyWith =>
+  _$$CollectionImplCopyWith<_$CollectionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

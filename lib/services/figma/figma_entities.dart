@@ -44,6 +44,7 @@ class FigmaVariable with _$FigmaVariable {
     required FigmaVariableType resolvedType,
     required Map<String, dynamic> valuesByMode,
     required String variableCollectionId,
+    required bool remote,
   }) = _Variable;
   factory FigmaVariable.fromJson(Map<String, dynamic> json) =>
       _$FigmaVariableFromJson(json);
@@ -56,6 +57,7 @@ class FigmaCollection with _$FigmaCollection {
     required String id,
     required String defaultModeId,
     required List<FigmaMode> modes,
+    required bool remote,
   }) = _Collection;
   factory FigmaCollection.fromJson(Map<String, dynamic> json) =>
       _$FigmaCollectionFromJson(json);
