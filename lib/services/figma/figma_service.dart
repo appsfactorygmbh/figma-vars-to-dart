@@ -9,6 +9,7 @@ class FigmaService {
     required Map<String, String> collectionOverrides,
     required Map<String, String> variableOverrides,
     required Set<String> excludedCollections,
+    required bool includeRemote,
     String? jsonOutput,
   }) async {
     final dio = Dio();
@@ -28,6 +29,7 @@ class FigmaService {
         variableOverrides: variableOverrides,
         collectionOverrides: collectionOverrides,
         excludedCollections: excludedCollections,
+        includeRemote: includeRemote,
       ),
       responseData,
     );
@@ -39,6 +41,7 @@ FigmaResponse parseJsonFromApi(
   required Map<String, String> collectionOverrides,
   required Map<String, String> variableOverrides,
   required Set<String> excludedCollections,
+  required bool includeRemote,
 }) {
   final json = apiResponse['meta'];
   final collectionsJson = json['variableCollections'] as Map<String, dynamic>;
@@ -59,6 +62,7 @@ FigmaResponse parseJsonFromApi(
         );
       })
       .where(notExcluded)
+      .where((element) => includeRemote ? true : !element.remote)
       .toList();
 
   final allVariables = variablesJson.values
@@ -72,6 +76,7 @@ FigmaResponse parseJsonFromApi(
       )
       .where((variable) =>
           !excludedCollections.contains(variable.variableCollectionId))
+      .where((element) => includeRemote ? true : !element.remote)
       .toList();
 
   return FigmaResponse(

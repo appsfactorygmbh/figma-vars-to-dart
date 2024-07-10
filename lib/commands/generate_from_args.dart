@@ -48,16 +48,23 @@ class GenerateFromArgsCommand extends Command {
     argParser.addMultiOption(
       'collectionOverrides',
       defaultsTo: [],
-      help: 'Optional comma-separated overrides.',
+      help: 'Optional comma-separated list of collections overrides.',
     );
     argParser.addMultiOption(
       'variableOverrides',
       defaultsTo: [],
+      help: 'Optional comma-separated list of variables overrides.',
     );
     argParser.addMultiOption(
       'excludedCollections',
       defaultsTo: [],
-      help: 'Optional comma-separated list of collections to exclude',
+      help: 'Optional comma-separated list of collections to exclude.',
+    );
+    argParser.addFlag(
+      'includeRemote',
+      defaultsTo: false,
+      help:
+          'Optional, set to true to include remote variables and collections.',
     );
   }
 
@@ -83,6 +90,8 @@ class GenerateFromArgsCommand extends Command {
     final variableOverrides = args['variableOverrides'] as List<String>;
     final excludedCollections = args['excludedCollections'] as List<String>;
 
+    final includeRemote = args['includeRemote'] as bool;
+
     logger.log('Fetching the file $fileId from Figma');
     final (response, rawResponse) = await figmaApi.getVariables(
       token: token,
@@ -90,6 +99,7 @@ class GenerateFromArgsCommand extends Command {
       variableOverrides: parseOverrides(variableOverrides),
       collectionOverrides: parseOverrides(collectionOverrides),
       excludedCollections: excludedCollections.toSet(),
+      includeRemote: includeRemote,
     );
 
     if (jsonOutput != null) {

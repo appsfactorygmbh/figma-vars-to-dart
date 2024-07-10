@@ -6,8 +6,8 @@ part of 'figma_entities.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_FigmaResponse _$$_FigmaResponseFromJson(Map<String, dynamic> json) =>
-    _$_FigmaResponse(
+_$FigmaResponseImpl _$$FigmaResponseImplFromJson(Map<String, dynamic> json) =>
+    _$FigmaResponseImpl(
       variables: (json['variables'] as List<dynamic>)
           .map((e) => FigmaVariable.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -16,38 +16,42 @@ _$_FigmaResponse _$$_FigmaResponseFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_FigmaResponseToJson(_$_FigmaResponse instance) =>
+Map<String, dynamic> _$$FigmaResponseImplToJson(_$FigmaResponseImpl instance) =>
     <String, dynamic>{
       'variables': instance.variables,
       'collections': instance.collections,
     };
 
-_$_Mode _$$_ModeFromJson(Map<String, dynamic> json) => _$_Mode(
+_$ModeImpl _$$ModeImplFromJson(Map<String, dynamic> json) => _$ModeImpl(
       modeId: json['modeId'] as String,
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$$_ModeToJson(_$_Mode instance) => <String, dynamic>{
+Map<String, dynamic> _$$ModeImplToJson(_$ModeImpl instance) =>
+    <String, dynamic>{
       'modeId': instance.modeId,
       'name': instance.name,
     };
 
-_$_Variable _$$_VariableFromJson(Map<String, dynamic> json) => _$_Variable(
+_$VariableImpl _$$VariableImplFromJson(Map<String, dynamic> json) =>
+    _$VariableImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       resolvedType:
           $enumDecode(_$FigmaVariableTypeEnumMap, json['resolvedType']),
       valuesByMode: json['valuesByMode'] as Map<String, dynamic>,
       variableCollectionId: json['variableCollectionId'] as String,
+      remote: json['remote'] as bool,
     );
 
-Map<String, dynamic> _$$_VariableToJson(_$_Variable instance) =>
+Map<String, dynamic> _$$VariableImplToJson(_$VariableImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'resolvedType': _$FigmaVariableTypeEnumMap[instance.resolvedType]!,
       'valuesByMode': instance.valuesByMode,
       'variableCollectionId': instance.variableCollectionId,
+      'remote': instance.remote,
     };
 
 const _$FigmaVariableTypeEnumMap = {
@@ -57,20 +61,22 @@ const _$FigmaVariableTypeEnumMap = {
   FigmaVariableType.boolean: 'BOOLEAN',
 };
 
-_$_Collection _$$_CollectionFromJson(Map<String, dynamic> json) =>
-    _$_Collection(
+_$CollectionImpl _$$CollectionImplFromJson(Map<String, dynamic> json) =>
+    _$CollectionImpl(
       name: json['name'] as String,
       id: json['id'] as String,
       defaultModeId: json['defaultModeId'] as String,
       modes: (json['modes'] as List<dynamic>)
           .map((e) => FigmaMode.fromJson(e as Map<String, dynamic>))
           .toList(),
+      remote: json['remote'] as bool,
     );
 
-Map<String, dynamic> _$$_CollectionToJson(_$_Collection instance) =>
+Map<String, dynamic> _$$CollectionImplToJson(_$CollectionImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
       'defaultModeId': instance.defaultModeId,
       'modes': instance.modes,
+      'remote': instance.remote,
     };
