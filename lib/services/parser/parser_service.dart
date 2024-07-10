@@ -10,10 +10,8 @@ class ParserService {
 
   ParserService({required this.logger});
   List<CodeClass> parse(FigmaResponse response) {
-    final allVariables =
-        response.variables.where((element) => !element.remote).toList();
-    final allCollections =
-        response.collections.where((element) => !element.remote).toList();
+    final allVariables = response.variables;
+    final allCollections = response.collections;
 
     final collectionsById = {
       for (final collection in allCollections) collection.id: collection
