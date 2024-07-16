@@ -11,3 +11,8 @@
 ## 0.0.4
 - fix the case when there are multiple collections with the same name
 - add parameter to exclude specific collections by id or name
+
+## 0.0.5
+- add comment in generated files
+- fix dependencies seperated with commas
+- add feature to include/exclude remote variables from collection
