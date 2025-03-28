@@ -16,12 +16,11 @@ void main() {
     // color semantics imports color_primitives and has light and dark modes
     final text = File('example_response.json').readAsStringSync();
     final json = jsonDecode(text);
-    figmaResponse = parseJsonFromApi(
-      json,
-      variableOverrides: {},
-      collectionOverrides: {},
-      excludedCollections: {},
-    );
+    figmaResponse = FigmaService().parseJsonFromApi(json,
+        variableOverrides: {},
+        collectionOverrides: {},
+        excludedCollections: {},
+        includeRemote: false);
   });
 
   test('parser result should not be empty', () async {

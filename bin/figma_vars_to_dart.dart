@@ -14,7 +14,8 @@ Future<void> main(List<String> arguments) async {
   await (CommandRunner(
     'figma_vars_to_dart',
     'Generate Dart code out of Figma variables',
-  )..addCommand(
+  )
+        ..addCommand(
           GenerateFromArgsCommand(
             figmaApi: figmaApi,
             writer: writer,
@@ -22,6 +23,12 @@ Future<void> main(List<String> arguments) async {
             generator: generator,
             logger: logger,
           ),
-        ))
+        )
+        ..addCommand(DownloadImagesFromArgsCommand(
+            figmaApi: figmaApi,
+            parser: parser,
+            writer: writer,
+            generator: generator,
+            logger: logger)))
       .run(arguments);
 }
