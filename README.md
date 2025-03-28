@@ -132,9 +132,9 @@ See the [example](https://github.com/appsfactorygmbh/figma-vars-to-dart/tree/mai
 ### Downloading Images
 To use the download-images feature, create sections for specific use cases. Each section name must follow the format "APP_ASSET_$section", where $section represents a specific use case. Then, add the images you want to download and convert them into components.
 <details open>
-  <summary>Sample inputs for the demo purposes</summary>
+  <summary>Sample for the demo purposes</summary>
 
-  ![Input 1](https://raw.githubusercontent.com/appsfactorygmbh/figma-vars-to-dart/main/images/figma_section.png)
+  ![Input 3](https://raw.githubusercontent.com/appsfactorygmbh/figma-vars-to-dart/main/images/figma_section.png)
 </details>
 
 #### Run the command
