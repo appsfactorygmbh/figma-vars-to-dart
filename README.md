@@ -7,11 +7,6 @@ Bring your Figma design system and Flutter app implementation closer together by
 * There's manual interaction with Figma UI required and it takes time on bigger projects
 * No easy way to detect which variables changed/updated without manual inspection
 
-
-Use cases:
-* Light / dark mode
-* Adaptive layouts
-
 ## Installation
 ```yaml
 dev_dependencies:
@@ -36,7 +31,7 @@ To create this token you can follow [this](https://help.figma.com/hc/en-us/artic
 ### Figma Variables
 Make sure your Figma project uses variables. 
 
-<details open>
+<details>
   <summary>Sample inputs for the demo purposes</summary>
 
   ![Input 1](https://raw.githubusercontent.com/appsfactorygmbh/figma-vars-to-dart/main/images/figma_collection_1.png)
@@ -55,7 +50,7 @@ dart pub run figma_vars_to_dart generate \
 
 #### Use the code
 
-<details open>
+<details>
   <summary>Generated files</summary>
 
 `color_primitives.dart`
@@ -131,7 +126,7 @@ See the [example](https://github.com/appsfactorygmbh/figma-vars-to-dart/tree/mai
 
 ### Downloading Images
 To use the download-images feature, create sections for specific use cases. Each section name must follow the format "APP_ASSET_$section", where $section represents a specific use case. Then, add the images you want to download and convert them into components.
-<details open>
+<details>
   <summary>Sample for the demo purposes</summary>
 
   ![Input 3](https://raw.githubusercontent.com/appsfactorygmbh/figma-vars-to-dart/main/images/figma_section.png)
