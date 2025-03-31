@@ -92,7 +92,7 @@ class DownloadImagesFromArgsCommand extends Command {
         await figmaApi.fetchFigmaFile(fileId: fileId, token: token);
 
     logger.log("📂 Identifying 'APP_ASSET_' sections...");
-    var assets = figmaApi.findAppAssets(fileData, sectionsToDownload);
+    final assets = figmaApi.findAppAssets(fileData, sectionsToDownload);
 
     if (assets.isEmpty) {
       logger.log("❌ No 'APP_ASSET_' sections found.");
@@ -111,7 +111,7 @@ class DownloadImagesFromArgsCommand extends Command {
       for (var scale in scalesList) {
         logger.log('  🔄 Fetching ${scale}x images...');
 
-        var imageUrls = await figmaApi.fetchImageUrls(
+        final imageUrls = await figmaApi.fetchImageUrls(
           fileId: fileId,
           token: token,
           nodeIds: nodeIds,
