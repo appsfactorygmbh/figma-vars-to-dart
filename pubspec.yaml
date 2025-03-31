@@ -1,6 +1,6 @@
 name: figma_vars_to_dart
 description: Convert Figma variables to Dart
-version: 0.0.5
+version: 0.1.0
 repository: https://github.com/appsfactorygmbh/figma-vars-to-dart
 homepage: https://appsfactory.de
 topics:
