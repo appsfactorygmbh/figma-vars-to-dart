@@ -88,7 +88,8 @@ class DownloadImagesFromArgsCommand extends Command {
     List<double> scalesList = handleScales(imageFormat, scales);
 
     logger.log('\n📥 Fetching Figma file...');
-    var fileData = await figmaApi.fetchFigmaFile(fileId: fileId, token: token);
+    final fileData =
+        await figmaApi.fetchFigmaFile(fileId: fileId, token: token);
 
     logger.log("📂 Identifying 'APP_ASSET_' sections...");
     var assets = figmaApi.findAppAssets(fileData, sectionsToDownload);
