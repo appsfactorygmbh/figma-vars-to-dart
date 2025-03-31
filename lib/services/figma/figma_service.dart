@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:figma_vars_to_dart/services/logger/logger.dart';
 
 import 'figma_entities.dart';
 
 class FigmaService {
   final dio = Dio();
+  final logger = LoggerService();
 
   Future<(FigmaResponse, Map<String, dynamic>)> getVariables({
     required String fileId,
@@ -52,7 +54,7 @@ class FigmaService {
       );
       return response.data;
     } catch (e) {
-      print('Error fetching Figma file: $e');
+      logger.log('Error fetching Figma file: $e');
       return {};
     }
   }
@@ -105,7 +107,7 @@ class FigmaService {
     String ids = nodeIds.join(',');
     var url =
         'https://api.figma.com/v1/images/$fileId?ids=$ids&format=$imageFormat&scale=$scale';
-    print(url);
+    logger.log(url);
 
     dio.options.headers = {
       'X-Figma-Token': token,
@@ -115,7 +117,7 @@ class FigmaService {
       var response = await dio.get(url);
       return Map<String, String>.from(response.data['images'] ?? {});
     } catch (e) {
-      print('Error fetching image URLs: $e');
+      logger.log('Error fetching image URLs: $e');
       return {};
     }
   }
@@ -147,7 +149,7 @@ class FigmaService {
       String filePath = '$scaleFolder/$imageName.$imageFormat';
 
       if (!forceDownload && await File(filePath).exists()) {
-        print('⚡ Skipped (already exists): $filePath');
+        logger.log('⚡ Skipped (already exists): $filePath');
         continue;
       }
 
@@ -155,9 +157,9 @@ class FigmaService {
         var response = await dio.get(imageUrl,
             options: Options(responseType: ResponseType.bytes));
         await File(filePath).writeAsBytes(response.data);
-        print('✅ Downloaded: $filePath');
+        logger.log('✅ Downloaded: $filePath');
       } catch (e) {
-        print('❌ Error downloading image $imageName: $e');
+        logger.log('❌ Error downloading image $imageName: $e');
       }
     }
   }

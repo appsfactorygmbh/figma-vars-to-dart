@@ -49,7 +49,7 @@ class DownloadImagesFromArgsCommand extends Command {
         help: 'Format of the downloaded images, defaults to png.');
     argParser.addOption('section',
         mandatory: false,
-        defaultsTo: null,
+        defaultsTo: 'APP_ASSET_',
         help:
             r'Specify sections to download (comma-separated), defaults to all APP_ASSET_$section sections.');
     argParser.addFlag('force',
@@ -80,11 +80,9 @@ class DownloadImagesFromArgsCommand extends Command {
     final forceDownload = args['force'] as bool;
 
     List<String> sectionsToDownload = [];
-    if (args['sectionSuffix'] != null) {
-      sectionsToDownload = (args['sectionSuffix'] as String)
-          .split(',')
-          .map((e) => e.trim())
-          .toList();
+    if ((args['section'] as String) != 'APP_ASSET_') {
+      sectionsToDownload =
+          (args['section'] as String).split(',').map((e) => e.trim()).toList();
     }
 
     List<double> scalesList = handleScales(imageFormat, scales);
@@ -92,16 +90,16 @@ class DownloadImagesFromArgsCommand extends Command {
     logger.log('\n📥 Fetching Figma file...');
     var fileData = await figmaApi.fetchFigmaFile(fileId: fileId, token: token);
 
-    print("📂 Identifying 'APP_ASSET_' sections...");
+    logger.log("📂 Identifying 'APP_ASSET_' sections...");
     var assets = figmaApi.findAppAssets(fileData, sectionsToDownload);
 
     if (assets.isEmpty) {
-      print("❌ No 'APP_ASSET_' sections found.");
+      logger.log("❌ No 'APP_ASSET_' sections found.");
       return;
     }
 
     for (var sectionName in assets.keys) {
-      print('\n📥 Processing images for section: $sectionName');
+      logger.log('\n📥 Processing images for section: $sectionName');
 
       List<Map<String, String>> assetList =
           assets[sectionName]!; // Full asset list (id + name)
@@ -110,7 +108,7 @@ class DownloadImagesFromArgsCommand extends Command {
 
       // Loop over the scales list, fetch and download images for each scale
       for (var scale in scalesList) {
-        print('  🔄 Fetching ${scale}x images...');
+        logger.log('  🔄 Fetching ${scale}x images...');
 
         var imageUrls = await figmaApi.fetchImageUrls(
           fileId: fileId,
@@ -131,7 +129,7 @@ class DownloadImagesFromArgsCommand extends Command {
       }
     }
 
-    print('\n🎉 All images downloaded successfully!');
+    logger.log('\n🎉 All images downloaded successfully!');
   }
 
   List<double> handleScales(String format, String scales) {
@@ -152,7 +150,7 @@ class DownloadImagesFromArgsCommand extends Command {
     if (format == 'svg') {
       if (scalesList.length != 1 ||
           (scalesList.length == 1 && scalesList.first != 1.0)) {
-        print(
+        logger.log(
             '\n❗ Warning: The "scale" argument is ignored for SVG format. Using scale = 1.0.');
       }
       return [1.0]; // Override with 1.0

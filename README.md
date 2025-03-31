@@ -148,7 +148,7 @@ dart pub run figma_vars_to_dart download-images \
 | `--outputFolder` | String  | ❌ No    | `assets`      | The folder where downloaded images will be stored. Defaults to `assets/`. |
 | `--format`       | String  | ❌ No    | `png`         | The format of the downloaded images. Allowed values: `jpg`, `png`, `svg`. |
 | `--scale`        | String  | ❌ No    | `1.0,2.0,3.0` | The scales for downloaded images (comma-separated). Must be between **0.01 and 4.0**. **Note:** If the format is `svg`, this argument is ignored and set to `1.0`. |
-| `--section`      | String  | ❌ No    | `all APP_ASSET_ sections`        | Specify **Figma sections** to download (comma-separated). By default, all `APP_ASSET_$section` sections are considered. |
+| `--section`      | String  | ❌ No    | `APP_ASSET_`        | Specify **Figma sections** to download (comma-separated). By default, all `APP_ASSET_$section` sections are considered. |
 | `--force`        | Flag    | ❌ No    | `false`       | Forces downloading the images even if they already exist. |
 
 
