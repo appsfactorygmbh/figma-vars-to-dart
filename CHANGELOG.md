@@ -16,3 +16,7 @@
 - add comment in generated files
 - fix dependencies seperated with commas
 - add feature to include/exclude remote variables from collection
+
+## 0.1.0
+- add `download-images` command to download images from sections
+
