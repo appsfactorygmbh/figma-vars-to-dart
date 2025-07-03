@@ -60,7 +60,7 @@ class FigmaService {
   }
 
   /// Finds sections matching `APP_ASSET_<sectionName>` (or all if sectionsToDownload is empty)
-  Map<String, List<Map<String, String>>> findAppAssets(
+  Map<String, List<Map<String, String>>> findAppImages(
       Map<String, dynamic> data, List<String> sectionsToDownload) {
     Map<String, List<Map<String, String>>> imageNodes = {};
 
@@ -91,6 +91,60 @@ class FigmaService {
             });
           }
         }
+      }
+    }
+
+    return imageNodes;
+  }
+
+  /// Finds sections matching `APP_ASSET_<sectionName>` (or all if sectionsToDownload is empty)
+  Map<String, List<Map<String, String>>> findAppIcons(
+      Map<String, dynamic> data, List<String> sectionsToDownload) {
+    Map<String, List<Map<String, String>>> imageNodes = {};
+
+    void traverseNodes(dynamic node, String folderName) {
+      if (node == null || node['children'] == null) return;
+
+      for (var child in node['children']) {
+        if (child['type'] == 'FRAME' || child['type'] == 'COMPONENT_SET') {
+          // Recursively traverse nested frames & component sets (for variants)
+
+          traverseNodes(child, folderName);
+        } else if (child['type'] == 'COMPONENT') {
+          imageNodes[folderName]!.add({
+            'id': child['id'],
+            'name': child['name'],
+          });
+        } else if (child['type'] == 'INSTANCE') {
+          // Extract instances but don’t go deeper
+          imageNodes[folderName]!.add({
+            'id': child['id'],
+            'name': child['name'],
+          });
+        } else {
+          continue;
+        }
+      }
+    }
+
+    for (var page in data['document']['children'] ?? []) {
+      for (var node in page['children'] ?? []) {
+        if (!node['name'].startsWith('APP_ASSET_') || node['type'] != 'FRAME') {
+          continue;
+        }
+
+        String folderName = node['name'].replaceFirst('APP_ASSET_', '');
+
+        // Only include specified sections (or all if empty)
+        if (sectionsToDownload.isNotEmpty &&
+            !sectionsToDownload.contains(folderName)) {
+          continue;
+        }
+
+        imageNodes[folderName] = [];
+
+        // Start recursive traversal
+        traverseNodes(node, folderName);
       }
     }
 

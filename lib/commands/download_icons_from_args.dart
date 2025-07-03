@@ -5,14 +5,14 @@ import 'package:figma_vars_to_dart/services/logger/logger.dart';
 
 import '../services/services.dart';
 
-class DownloadImagesFromArgsCommand extends Command {
+class DownloadIconsFromArgsCommand extends Command {
   final FigmaService figmaApi;
   final ParserService parser;
   final WriterService writer;
   final CodeGeneratorService generator;
   final LoggerService logger;
 
-  DownloadImagesFromArgsCommand({
+  DownloadIconsFromArgsCommand({
     required this.figmaApi,
     required this.parser,
     required this.writer,
@@ -33,37 +33,37 @@ class DownloadImagesFromArgsCommand extends Command {
       'outputFolder',
       mandatory: false,
       defaultsTo: 'assets',
-      help: 'Folder for the downloaded images, defaults to /assets.',
+      help: 'Folder for the downloaded icons, defaults to /assets.',
     );
     argParser.addOption(
       'scale',
       mandatory: false,
       defaultsTo: '1.0,2.0,3.0',
       help:
-          'Specify the scales of images to download (comma-separated), must be a number between 0.01 and 4. Defaults to 1.0,2.0,3.0. Warning: The "scale" argument is ignored for SVG format.',
+          'Specify the scales of icons to download (comma-separated), must be a number between 0.01 and 4. Defaults to 1.0,2.0,3.0. Warning: The "scale" argument is ignored for SVG format.',
     );
     argParser.addOption('format',
         mandatory: false,
         defaultsTo: 'png',
         allowed: ['jpg', 'png', 'svg'],
-        help: 'Format of the downloaded images, defaults to png.');
-    argParser.addOption('section',
+        help: 'Format of the downloaded icons, defaults to png.');
+    argParser.addOption('frame',
         mandatory: false,
         defaultsTo: 'APP_ASSET_',
         help:
-            r'Specify sections to download (comma-separated), defaults to all APP_ASSET_$section sections.');
+            r'Specify frames to download (comma-separated), defaults to all APP_ASSET_$frame frames.');
     argParser.addFlag('force',
         defaultsTo: false,
         help:
-            'Force download the images even if they already exist, defaults to false.');
+            'Force download the icons even if they already exist, defaults to false.');
   }
 
   @override
   String get description =>
-      'Download images from Figma sections using command line args.';
+      'Download icons from Figma sections using command line args.';
 
   @override
-  String get name => 'download-images';
+  String get name => 'download-icons';
 
   @override
   FutureOr? run() async {
@@ -75,32 +75,32 @@ class DownloadImagesFromArgsCommand extends Command {
     final fileId = args['fileId'] as String;
     final token = args['token'] as String;
     final outputFolder = args['outputFolder'] as String;
-    final imageFormat = args['format'] as String;
+    final iconsFormat = args['format'] as String;
     final scales = args['scale'] as String;
     final forceDownload = args['force'] as bool;
 
     List<String> sectionsToDownload = [];
-    if ((args['section'] as String) != 'APP_ASSET_') {
+    if ((args['frame'] as String) != 'APP_ASSET_') {
       sectionsToDownload =
-          (args['section'] as String).split(',').map((e) => e.trim()).toList();
+          (args['frame'] as String).split(',').map((e) => e.trim()).toList();
     }
 
-    List<double> scalesList = handleScales(imageFormat, scales);
+    List<double> scalesList = handleScales(iconsFormat, scales);
 
     logger.log('\n📥 Fetching Figma file...');
     final fileData =
         await figmaApi.fetchFigmaFile(fileId: fileId, token: token);
 
-    logger.log("📂 Identifying 'APP_ASSET_' sections...");
-    final assets = figmaApi.findAppImages(fileData, sectionsToDownload);
+    logger.log("📂 Identifying 'APP_ASSET_' frames...");
+    final assets = figmaApi.findAppIcons(fileData, sectionsToDownload);
 
     if (assets.isEmpty) {
-      logger.log("❌ No 'APP_ASSET_' sections found.");
+      logger.log("❌ No 'APP_ASSET_' frames found.");
       return;
     }
 
     for (var sectionName in assets.keys) {
-      logger.log('\n📥 Processing images for section: $sectionName');
+      logger.log('\n📥 Processing icons for frames: $sectionName');
 
       List<Map<String, String>> assetList =
           assets[sectionName]!; // Full asset list (id + name)
@@ -115,7 +115,7 @@ class DownloadImagesFromArgsCommand extends Command {
           fileId: fileId,
           token: token,
           nodeIds: nodeIds,
-          imageFormat: imageFormat,
+          imageFormat: iconsFormat,
           scale: scale,
         );
 
@@ -123,7 +123,7 @@ class DownloadImagesFromArgsCommand extends Command {
             parentDirectory: outputFolder,
             imageUrls: imageUrls,
             sectionName: sectionName,
-            imageFormat: imageFormat,
+            imageFormat: iconsFormat,
             scale: scale,
             assets: assetList,
             forceDownload: forceDownload);
