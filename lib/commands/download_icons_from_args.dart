@@ -78,11 +78,11 @@ class DownloadIconsFromArgsCommand extends Command {
     final iconsFormat = args['format'] as String;
     final scales = args['scale'] as String;
     final forceDownload = args['force'] as bool;
+    final frame = args['frame'] as String;
 
     List<String> sectionsToDownload = [];
-    if ((args['frame'] as String) != 'APP_ASSET_') {
-      sectionsToDownload =
-          (args['frame'] as String).split(',').map((e) => e.trim()).toList();
+    if (frame != 'APP_ASSET_') {
+      sectionsToDownload = frame.split(',').map((e) => e.trim()).toList();
     }
 
     List<double> scalesList = handleScales(iconsFormat, scales);
@@ -99,11 +99,11 @@ class DownloadIconsFromArgsCommand extends Command {
       return;
     }
 
-    for (var sectionName in assets.keys) {
-      logger.log('\n📥 Processing icons for frames: $sectionName');
+    for (var frameName in assets.keys) {
+      logger.log('\n📥 Processing icons for frames: $frameName');
 
       List<Map<String, String>> assetList =
-          assets[sectionName]!; // Full asset list (id + name)
+          assets[frameName]!; // Full asset list (id + name)
       List<String> nodeIds =
           assetList.map((e) => e['id']!).toList(); // Extract only IDs
 
@@ -122,7 +122,7 @@ class DownloadIconsFromArgsCommand extends Command {
         await figmaApi.downloadImages(
             parentDirectory: outputFolder,
             imageUrls: imageUrls,
-            sectionName: sectionName,
+            sectionName: frameName,
             imageFormat: iconsFormat,
             scale: scale,
             assets: assetList,
