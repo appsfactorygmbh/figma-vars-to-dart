@@ -20,3 +20,6 @@
 ## 0.1.0
 - add `download-images` command to download images from sections
 
+## 0.2.0
+- add `download-icons` command to download icons from frames
+

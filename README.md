@@ -152,7 +152,7 @@ dart pub figma_vars_to_dart download-images \
 | `--force`        | Flag    | ❌ No    | `false`       | Forces downloading the images even if they already exist. |
 
 ### Downloading Icons
-To use the download-icons feature, create frames for specific use cases. Each frame should be named using the format `APP_ASSET_$frame`, where `$frame` represents the use case. Icons must be defined as components and can be organized within nested frames. The script also supports variants of icons.
+To use the download-icons feature, create frames for specific use cases. Each frame should be named using the format `APP_ASSET_$frame`, where `$frame` represents the use case. Icons must be defined as components and can be organized within nested frames. Variants of icons are also supported.
 
 <details>
   <summary>Sample structure for the demo purposes</summary>
