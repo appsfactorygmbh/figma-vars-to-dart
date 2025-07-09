@@ -10,7 +10,7 @@ Bring your Figma design system and Flutter app implementation closer together by
 ## Installation
 ```yaml
 dev_dependencies:
-  figma_vars_to_dart: ^0.1.0 
+  figma_vars_to_dart: ^0.2.0 
 ```
 or 
 
