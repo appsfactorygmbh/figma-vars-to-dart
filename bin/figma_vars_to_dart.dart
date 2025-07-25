@@ -29,6 +29,12 @@ Future<void> main(List<String> arguments) async {
             parser: parser,
             writer: writer,
             generator: generator,
+            logger: logger))
+        ..addCommand(DownloadIconsFromArgsCommand(
+            figmaApi: figmaApi,
+            parser: parser,
+            writer: writer,
+            generator: generator,
             logger: logger)))
       .run(arguments);
 }

@@ -10,7 +10,7 @@ Bring your Figma design system and Flutter app implementation closer together by
 ## Installation
 ```yaml
 dev_dependencies:
-  figma_vars_to_dart: ^0.1.0 
+  figma_vars_to_dart: ^0.2.0 
 ```
 or 
 
@@ -41,7 +41,7 @@ Make sure your Figma project uses variables.
 #### Run the command
 
 ```bash
-dart pub run figma_vars_to_dart generate \
+dart run figma_vars_to_dart generate \
 	 --token $FIGMA_TOKEN \
 	 --fileId $YOUR_FIGMA_FILE_ID \ # you can find this string value in your file URL
 	 --dartOutputFolder lib/shared/ui_constants \
@@ -125,7 +125,7 @@ You can use any state management you prefer to provide these values to your widg
 See the [example](https://github.com/appsfactorygmbh/figma-vars-to-dart/tree/main/example) for more information.
 
 ### Downloading Images
-To use the download-images feature, create sections for specific use cases. Each section name must follow the format "APP_ASSET_$section", where $section represents a specific use case. Then, add the images you want to download and convert them into components.
+To use the download-images feature, create sections for specific use cases. Each section name must follow the format `APP_ASSET_$section`, where `$section` represents the use case. Then, add the images you want to download and convert them into components.
 <details>
   <summary>Sample for the demo purposes</summary>
 
@@ -135,7 +135,7 @@ To use the download-images feature, create sections for specific use cases. Each
 #### Run the command
 
 ```bash
-dart pub run figma_vars_to_dart download-images \
+dart pub figma_vars_to_dart download-images \
 	 --token $FIGMA_TOKEN \
 	 --fileId $YOUR_FIGMA_FILE_ID 
 
@@ -149,6 +149,34 @@ dart pub run figma_vars_to_dart download-images \
 | `--format`       | String  | ❌ No    | `png`         | The format of the downloaded images. Allowed values: `jpg`, `png`, `svg`. |
 | `--scale`        | String  | ❌ No    | `1.0,2.0,3.0` | The scales for downloaded images (comma-separated). Must be between **0.01 and 4.0**. **Note:** If the format is `svg`, this argument is ignored and set to `1.0`. |
 | `--section`      | String  | ❌ No    | `APP_ASSET_`        | Specify **Figma sections** to download (comma-separated). By default, all `APP_ASSET_$section` sections are considered. |
+| `--force`        | Flag    | ❌ No    | `false`       | Forces downloading the images even if they already exist. |
+
+### Downloading Icons
+To use the download-icons feature, create frames for specific use cases. Each frame should be named using the format `APP_ASSET_$frame`, where `$frame` represents the use case. Icons must be defined as components and can be organized within nested frames. Variants of icons are also supported.
+
+<details>
+  <summary>Sample structure for the demo purposes</summary>
+
+  ![Input 3](https://raw.githubusercontent.com/appsfactorygmbh/figma-vars-to-dart/main/images/figma_frame.png)
+</details>
+
+#### Run the command
+
+```bash
+dart pub figma_vars_to_dart download-icons \
+	 --token $FIGMA_TOKEN \
+	 --fileId $YOUR_FIGMA_FILE_ID 
+
+```
+#### Arguments 
+| Argument         | Type    | Required | Default       | Description |
+|------------------|---------|----------|---------------|-------------|
+| `--fileId`       | String  | ✅ Yes   | None          | The **Figma file ID**, which can be found in the Figma file URL. |
+| `--token`        | String  | ✅ Yes   | None          | Your **Figma personal access token** for authentication. |
+| `--outputFolder` | String  | ❌ No    | `assets`      | The folder where downloaded images will be stored. Defaults to `assets/`. |
+| `--format`       | String  | ❌ No    | `png`         | The format of the downloaded images. Allowed values: `jpg`, `png`, `svg`. |
+| `--scale`        | String  | ❌ No    | `1.0,2.0,3.0` | The scales for downloaded images (comma-separated). Must be between **0.01 and 4.0**. **Note:** If the format is `svg`, this argument is ignored and set to `1.0`. |
+| `--frame`      | String  | ❌ No    | `APP_ASSET_`        | Specify **Figma frames** to download (comma-separated). By default, all `APP_ASSET_$frame` frames are considered. |
 | `--force`        | Flag    | ❌ No    | `false`       | Forces downloading the images even if they already exist. |
 
 
